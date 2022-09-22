@@ -587,7 +587,18 @@ progress {
 .blockquote > :last-child {
   margin-bottom: 0;
 }
-
+footer {
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    height: 20px;
+    padding-bottom: 20px;
+    /*border-top-color: #990012;*/
+    border-top-width: 2px;
+    border-top-style: solid;
+    text-align: center;
+    /*font-size: 0.75em;*/
+}
 .blockquote-footer {
   margin-top: -1rem;
   margin-bottom: 1rem;
