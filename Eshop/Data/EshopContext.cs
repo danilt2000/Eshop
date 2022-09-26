@@ -42,7 +42,7 @@ namespace Eshop.Data
             );
 
 
-
+            base.OnModelCreating(modelBuilder);
 
         }
 

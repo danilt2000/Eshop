@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Eshop.Controllers
 {
-    public class BasketsController : Controller
+    public class BasketsController : Controller 
     {
         private readonly EshopContext _context;
 
