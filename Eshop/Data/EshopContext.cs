@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Eshop.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Eshop.Data
 {
-    public class EshopContext : DbContext 
+    public class EshopContext : IdentityDbContext
     {
         public EshopContext(DbContextOptions<EshopContext> options)
             : base(options)

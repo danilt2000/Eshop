@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Eshop.Data;
 using Eshop.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Eshop.Controllers
 {
@@ -57,6 +58,7 @@ namespace Eshop.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //[Authorize]
         public async Task<IActionResult> Create([Bind("BasketID,Name")] Basket basket)
         {
             if (ModelState.IsValid)

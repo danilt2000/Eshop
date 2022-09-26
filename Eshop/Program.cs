@@ -1,15 +1,26 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 
 using Eshop.Data;
-
-
-
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EshopContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("EshopContext") ?? throw new InvalidOperationException("Connection string 'EshopContext' not found.")));
+
+ builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<EshopContext>().AddDefaultTokenProviders();//Добавление датабазы ддля регистрации 
+
+
+
+//здесь буду добавлять скопированное 2.7 2.8
+
+
+
+
+
+
+
 
 
 
@@ -31,6 +42,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
