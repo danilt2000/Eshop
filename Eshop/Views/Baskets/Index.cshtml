@@ -1,35 +1,105 @@
-﻿@model IEnumerable<Eshop.Models.Basket>
+﻿@model IEnumerable<Eshop.Models.Product>
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
+	//Layout = null;
 }
 
-<h1>Index</h1>
+<div class="container">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.BasketID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BasketID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BasketID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+	<div class="row">
+
+		<div class="col-8">
+
+			<div style="margin-left: 35px;  margin-top:30px;">
+
+
+				<h1>
+					Košík
+				</h1>
+			</div>
+			@foreach (var item in Model)
+			{
+				if (item.BasketID == 1)
+				{
+					<div style=" height: 300px;
+    background-color:	rgba(222, 231, 236, 0.212);
+    margin-left: 35px;
+    margin-top:30px;
+    border: 6px ;
+    border-radius: 25px;">
+						<h1 style="padding-top: 30px; padding-left: 30px;">
+							@Html.DisplayFor(modelItem => item.Name)
+						</h1>
+						<h1 style="padding-top: 30px; padding-left: 30px;">
+							@Html.DisplayFor(modelItem => item.Price)
+						</h1>
+						<h1 style="padding-top: 30px; padding-left: 30px;">
+							@Html.DisplayFor(modelItem => item.Type)
+						</h1>
+					</div>
+				}
+			}
+			<div style=" height: 300px;
+    background-color:	rgba(222, 231, 236, 0.212);
+    margin-left: 35px;
+    margin-top:30px;
+    border: 6px ;
+    border-radius: 25px;">
+			</div>
+			@*	<div class="itd-card">
+				<h1>
+				gdfgfd
+				</h1>
+				</div>*@
+		</div>
+
+
+	</div>
+
+
+</div>
+
+@*
+	<section class="py-5">
+
+
+
+
+	<div class="container px-4 px-lg-5 mt-5">
+	<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+	@foreach (var item in Model)
+	{
+	if (item.BasketID == 1)
+	{
+	<div class="col mb-5">
+	<div class="card h-100">
+	<!-- Product image-->
+	<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+	<!-- Product details-->
+	<div class="card-body p-4">
+	<div class="text-center">
+	<!-- Product name-->
+	<h5 class="fw-bolder">@Html.DisplayFor(modelItem => item.Name)</h5>
+	<!-- Product price-->
+	$@Html.DisplayFor(modelItem => item.Price)
+	</div>
+	</div>
+	<!-- Product actions-->
+	@{
+
+	<form method="post" asp-controller="Products" asp-action="AddToBasket" asp-route-id="@item.ProductID">
+	<div type="submit" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+	<div class="text-center">
+	<input class="btn btn-dark mt-auto" type="submit" value="Added" />
+	</div>
+	</div>
+	</form>
+	}
+	</div>
+	</div>
+	}
+	}
+	</div>
+	</div>
+	</section>*@

@@ -3,6 +3,7 @@ using Eshop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Eshop.Migrations
 {
     [DbContext(typeof(EshopContext))]
-    partial class EshopContextModelSnapshot : ModelSnapshot
+    [Migration("20220922224437_AddProducts2")]
+    partial class AddProducts2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,13 +38,6 @@ namespace Eshop.Migrations
                     b.HasKey("BasketID");
 
                     b.ToTable("Basket");
-
-                    b.HasData(
-                        new
-                        {
-                            BasketID = 1,
-                            Name = "StartBasket"
-                        });
                 });
 
             modelBuilder.Entity("Eshop.Models.Product", b =>
@@ -88,17 +83,17 @@ namespace Eshop.Migrations
                         {
                             ProductID = 2,
                             BasketID = 0,
-                            Description = "Multicooker",
-                            Name = "Multicooker",
+                            Description = "Notebook",
+                            Name = "EliteBook",
                             Price = 4,
-                            Type = 0
+                            Type = 3
                         },
                         new
                         {
                             ProductID = 3,
                             BasketID = 0,
-                            Description = "Mouse",
-                            Name = "Mouse",
+                            Description = "Notebook",
+                            Name = "EliteBook",
                             Price = 4,
                             Type = 3
                         },
@@ -107,7 +102,7 @@ namespace Eshop.Migrations
                             ProductID = 4,
                             BasketID = 0,
                             Description = "Notebook",
-                            Name = "Wire",
+                            Name = "EliteBook",
                             Price = 4,
                             Type = 3
                         },
@@ -115,10 +110,46 @@ namespace Eshop.Migrations
                         {
                             ProductID = 5,
                             BasketID = 0,
-                            Description = "AutoWire",
-                            Name = "AutoWire",
+                            Description = "Notebook",
+                            Name = "EliteBook",
                             Price = 4,
-                            Type = 4
+                            Type = 3
+                        },
+                        new
+                        {
+                            ProductID = 6,
+                            BasketID = 0,
+                            Description = "Notebook",
+                            Name = "EliteBook",
+                            Price = 4,
+                            Type = 3
+                        },
+                        new
+                        {
+                            ProductID = 7,
+                            BasketID = 0,
+                            Description = "Notebook",
+                            Name = "EliteBook",
+                            Price = 4,
+                            Type = 3
+                        },
+                        new
+                        {
+                            ProductID = 8,
+                            BasketID = 0,
+                            Description = "Notebook",
+                            Name = "EliteBook",
+                            Price = 4,
+                            Type = 3
+                        },
+                        new
+                        {
+                            ProductID = 9,
+                            BasketID = 0,
+                            Description = "Notebook",
+                            Name = "EliteBook",
+                            Price = 4,
+                            Type = 3
                         });
                 });
 #pragma warning restore 612, 618

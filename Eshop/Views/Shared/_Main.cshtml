@@ -32,24 +32,18 @@
 						</ul>
 					</li>
 				</ul>
-				<form class="d-flex">
+				
+				<form  asp-area="" asp-controller="Baskets" asp-action="Index" class="d-flex">
 					<button class="btn btn-outline-dark" type="submit">
 						<i class="bi-cart-fill me-1"></i>
 						Cart
-						<span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+						<span class="badge bg-dark text-white ms-1 rounded-pill">@ViewData["CountOfProducts"]</span>
 					</button>
 				</form>
 			</div>
 		</div>
 	</nav>
-	<header class="bg-dark py-5">
-		<div class="container px-4 px-lg-5 my-5">
-			<div class="text-center text-white">
-				<h1 class="display-4 fw-bolder">Shop in style</h1>
-				<p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
-			</div>
-		</div>
-	</header>
+	
 
 	<div>
 		@RenderBody()
@@ -58,14 +52,14 @@
 
 
 	<footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="~/js/scripts.js"></script>
+		<div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+	</footer>
+	<!-- Bootstrap core JS-->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Core theme JS-->
+	<script src="~/js/scripts.js"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
+	@await RenderSectionAsync("Scripts", required: false)
 
 </body>
 </html>

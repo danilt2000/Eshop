@@ -22,7 +22,26 @@ namespace Eshop.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Product.ToListAsync());
+
+
+
+
+
+            //foreach (var item in Model)
+            //{
+            //    if (item.BasketID != 0)
+            //    {
+            //        count++;
+            //    }
+            //}
+
+            ViewData["CountOfProducts"] = _context.Product.Where(basc=> basc.BasketID!=0)
+                .Count()
+                .ToString();
+
+
+
+            return View(await _context.Product.ToListAsync());
         }
 
         // GET: Products/Details/5
@@ -41,6 +60,48 @@ namespace Eshop.Controllers
             }
 
             return View(product);
+        }
+
+
+        // GET: Products/Create
+        public async Task<IActionResult> AddToBasket(int? id)
+        {
+            if (id == null || _context.Product == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Product.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
+        // POST: Products/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddToBasket(int id/*, [Bind("BasketID")] Product product*/)
+        {
+            if (_context.Product == null)
+            {
+                return Problem("Entity set 'EshopContext.Product'  is null.");
+            }
+
+
+            var product = _context.Product.Find(id);
+
+            product.BasketID = 1;
+            if (product != null)
+            {
+                _context.Product.Update(product);
+            }
+
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Products/Create
@@ -148,14 +209,14 @@ namespace Eshop.Controllers
             {
                 _context.Product.Remove(product);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ProductExists(int id)
         {
-          return _context.Product.Any(e => e.ProductID == id);
+            return _context.Product.Any(e => e.ProductID == id);
         }
     }
 }

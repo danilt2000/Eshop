@@ -7,12 +7,16 @@ using Eshop.Models;
 
 namespace Eshop.Data
 {
-    public class EshopContext : DbContext
+    public class EshopContext : DbContext 
     {
-        public EshopContext (DbContextOptions<EshopContext> options)
+        public EshopContext(DbContextOptions<EshopContext> options)
             : base(options)
         {
         }
+        //public EshopContext(DbContextOptions<EshopContext> options)
+        //    : base(options)
+        //{
+        //}
 
         public DbSet<Eshop.Models.Product> Product { get; set; } = default!;
         public DbSet<Eshop.Models.Basket> Basket { get; set; } = default!;
@@ -22,8 +26,23 @@ namespace Eshop.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasData(
-                    new Product { ProductID = 1, Name = "EliteBook", Description = "Notebook" ,Price =4 , Type=ProductType.Computers }
+                    new Product { ProductID = 1, Name = "EliteBook", Description = "Notebook", Price = 4, Type = ProductType.Computers }
+            ); modelBuilder.Entity<Product>().HasData(
+                   new Product { ProductID = 2, Name = "Multicooker", Description = "Multicooker", Price = 4, Type = ProductType.HomeAppliances }
+           ); modelBuilder.Entity<Product>().HasData(
+                  new Product { ProductID = 3, Name = "Mouse", Description = "Mouse", Price = 4, Type = ProductType.Computers }
+          ); modelBuilder.Entity<Product>().HasData(
+                 new Product { ProductID = 4, Name = "Wire", Description = "Notebook", Price = 4, Type = ProductType.Computers }
+         ); modelBuilder.Entity<Product>().HasData(
+                new Product { ProductID = 5, Name = "AutoWire", Description = "AutoWire", Price = 4, Type = ProductType.AutoStuff }
+        );
+            modelBuilder.Entity<Basket>().HasData(
+                    new Basket { BasketID = 1, Name = "StartBasket" }
             );
+
+
+
+
         }
 
 

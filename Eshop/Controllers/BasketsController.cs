@@ -22,7 +22,10 @@ namespace Eshop.Controllers
         // GET: Baskets
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Basket.ToListAsync());
+            ViewData["CountOfProducts"] = _context.Product.Where(basc => basc.BasketID != 0)
+               .Count()
+               .ToString();
+            return View(await _context.Product.ToListAsync());
         }
 
         // GET: Baskets/Details/5
