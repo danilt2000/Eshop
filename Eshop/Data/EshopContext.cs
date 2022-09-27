@@ -21,11 +21,14 @@ namespace Eshop.Data
 
         public DbSet<Eshop.Models.Product> Product { get; set; } = default!;
         public DbSet<Eshop.Models.Basket> Basket { get; set; } = default!;
+        public DbSet<Eshop.Models.Basket> User { get; set; } = default!;
 
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+           
+            
             modelBuilder.Entity<Product>().HasData(
                     new Product { ProductID = 1, Name = "EliteBook", Description = "Notebook", Price = 4, Type = ProductType.Computers }
             ); modelBuilder.Entity<Product>().HasData(

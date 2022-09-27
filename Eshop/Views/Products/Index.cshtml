@@ -1,5 +1,9 @@
-﻿@model IEnumerable<Eshop.Models.Product>
-
+﻿@using Eshop.Data
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<Eshop.Models.Product>
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject EshopContext _context;
 @{
 	ViewData["Title"] = "Index";
 }
@@ -13,10 +17,30 @@
 </header>
 
 
-
 <section class="py-5">
 	<div class="container px-4 px-lg-5 mt-5">
 		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+			@if (SignInManager.IsSignedIn(User))
+			{
+				
+				
+
+				string userName = User.Identity?.Name;
+
+
+				var id = _context.Users.Where(a => a.UserName == userName).ToList();
+				@foreach (var item in id)
+				{
+					@User.Identity?.Name 
+					string temp = " ";
+					@temp
+					@item.Id
+				}
+			}
+
+
+
+
 			@foreach (var item in Model)
 			{
 				<div class="col mb-5">

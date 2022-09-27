@@ -15,15 +15,15 @@ builder.Services.AddDbContext<EshopContext>(options =>
 
 //здесь буду добавлять скопированное 2.7 2.8
 builder.Services.Configure<IdentityOptions>(options => { options.Password.RequireDigit = true; 
-    options.Password.RequiredLength = 8; 
-    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength = 6; 
+    options.Password.RequireNonAlphanumeric = /*true*/ false;
     options.Password.RequireUppercase = true;
     options.Password.RequireLowercase = true; 
-    options.Password.RequiredUniqueChars = 6;
+    options.Password.RequiredUniqueChars = /*6*/0;
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
     options.Lockout.MaxFailedAccessAttempts = 10;
     options.Lockout.AllowedForNewUsers = true;
-    options.User.RequireUniqueEmail = true; });
+    options.User.RequireUniqueEmail = /*true*/ false; });
 
 
 builder.Services.ConfigureApplicationCookie(options => { options.Cookie.HttpOnly = true;
