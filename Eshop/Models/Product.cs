@@ -2,7 +2,7 @@
 {
     public class Product
     {
-        public int ProductID { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; } = string.Empty;
 

@@ -20,7 +20,6 @@ namespace Eshop.Models
 		//[Compare("Password")]
 		public string Password { get; set; }
 
-		public int BasketId { get; set; }
 
 
 	}
