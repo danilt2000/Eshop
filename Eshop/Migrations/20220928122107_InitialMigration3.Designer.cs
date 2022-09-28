@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Eshop.Migrations
 {
     [DbContext(typeof(EshopContext))]
-    [Migration("20220926155613_AddUser")]
-    partial class AddUser
+    [Migration("20220928122107_InitialMigration3")]
+    partial class InitialMigration3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,38 +26,46 @@ namespace Eshop.Migrations
 
             modelBuilder.Entity("Eshop.Models.Basket", b =>
                 {
-                    b.Property<int>("BasketID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BasketID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("BasketID");
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
 
-                    b.ToTable("Basket");
+                    b.HasKey("Id");
 
-                    b.HasData(
-                        new
-                        {
-                            BasketID = 1,
-                            Name = "StartBasket"
-                        });
+                    b.ToTable("Baskets");
+                });
+
+            modelBuilder.Entity("Eshop.Models.BasketProduct", b =>
+                {
+                    b.Property<int>("BasketId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BasketId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("BasketProduct");
                 });
 
             modelBuilder.Entity("Eshop.Models.Product", b =>
                 {
-                    b.Property<int>("ProductID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductID"), 1L, 1);
-
-                    b.Property<int>("BasketID")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -73,56 +81,9 @@ namespace Eshop.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductID");
+                    b.HasKey("Id");
 
-                    b.ToTable("Product");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductID = 1,
-                            BasketID = 0,
-                            Description = "Notebook",
-                            Name = "EliteBook",
-                            Price = 4,
-                            Type = 3
-                        },
-                        new
-                        {
-                            ProductID = 2,
-                            BasketID = 0,
-                            Description = "Multicooker",
-                            Name = "Multicooker",
-                            Price = 4,
-                            Type = 0
-                        },
-                        new
-                        {
-                            ProductID = 3,
-                            BasketID = 0,
-                            Description = "Mouse",
-                            Name = "Mouse",
-                            Price = 4,
-                            Type = 3
-                        },
-                        new
-                        {
-                            ProductID = 4,
-                            BasketID = 0,
-                            Description = "Notebook",
-                            Name = "Wire",
-                            Price = 4,
-                            Type = 3
-                        },
-                        new
-                        {
-                            ProductID = 5,
-                            BasketID = 0,
-                            Description = "AutoWire",
-                            Name = "AutoWire",
-                            Price = 4,
-                            Type = 4
-                        });
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -323,6 +284,25 @@ namespace Eshop.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Eshop.Models.BasketProduct", b =>
+                {
+                    b.HasOne("Eshop.Models.Basket", "Basket")
+                        .WithMany("Products")
+                        .HasForeignKey("BasketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Eshop.Models.Product", "Product")
+                        .WithMany("Baskets")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basket");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -372,6 +352,16 @@ namespace Eshop.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Eshop.Models.Basket", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Eshop.Models.Product", b =>
+                {
+                    b.Navigation("Baskets");
                 });
 #pragma warning restore 612, 618
         }

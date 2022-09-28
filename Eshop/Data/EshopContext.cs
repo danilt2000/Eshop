@@ -60,7 +60,7 @@ namespace Eshop.Data
 			//    );
 
 
-			//base.OnModelCreating(modelBuilder);
+			base.OnModelCreating(modelBuilder);
 
 		}
 
