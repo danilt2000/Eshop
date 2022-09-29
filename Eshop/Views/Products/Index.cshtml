@@ -7,10 +7,8 @@
 @{
 	ViewData["Title"] = "Index";
 	string userid = "";
-
-
-
 }
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <header class="bg-dark py-5">
 	<div class="container px-4 px-lg-5 my-5">
 		<div class="text-center text-white">
@@ -27,11 +25,7 @@
 
 			@if (SignInManager.IsSignedIn(User))
 			{
-
-
-
 				string userName = User.Identity?.Name;
-
 
 				var id = _context.Users.Where(a => a.UserName == userName).ToList();
 				userid = id[0].Id;
@@ -50,8 +44,6 @@
 				{
 					@foreach (var item in Model)
 					{
-
-
 						int hasproduct;
 						try
 						{
@@ -82,16 +74,7 @@
 
 								</div>
 							</div>
-							@*<form method="post" asp-controller="Products" asp-action="AddToBasket" asp-route-id="@item.Id">
-								<div type="submit" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-								<div class="text-center">
-								<input class="btn btn-outline-dark mt-auto" type="submit" value="Add to cart" />
-								</div>
-								</div>
-								</form>*@
 						}
-
-
 						catch (System.InvalidOperationException)
 						{
 
@@ -119,22 +102,10 @@
 
 								</div>
 							</div>
-
-
 							Console.WriteLine("The collection does not contain exactly one element.");
 						}
-
-
-
-
-
 					}
-
 				}
-
-
-
-
 			}
 			else
 			{
@@ -154,40 +125,46 @@
 									$@Html.DisplayFor(modelItem => item.Price)
 								</div>
 							</div>
-							<!-- Product actions-->
-							@{
-								//if (item.BasketID == 0)
-					//{
 
-								<form method="post" asp-controller="Products" asp-action="AddToBasket" asp-route-id="@item.Id">
-									<div type="submit" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-										<div class="text-center">
-											<input class="btn btn-outline-dark mt-auto" type="submit" value="Add to cart" />
-										</div>
+							<form method="post" asp-controller="Products" asp-action="AddToBasket" asp-route-id="@item.Id">
+								<div type="submit" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+									<div class="text-center">
+										<input class="btn btn-outline-dark mt-auto" type="submit" value="Add to cart" />
 									</div>
-								</form>
-								//}
-								//else
-								//{
-								//<form method="post" asp-controller="Products" asp-action="AddToBasket" asp-route-id="@item.ProductID">
-								//	<div type="submit" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-								//		<div class="text-center">
-								//			<input class="btn btn-dark mt-auto" type="submit" value="Added" />
-								//		</div>
-								//	</div>
-								//</form>
-					//}
-							}
+								</div>
+							</form>
+
 						</div>
 					</div>
 				}
-
-
 			}
-
-
-
-
 		</div>
 	</div>
 </section>
+<script type="text/javascript">
+	 $(function () {
+        $("#btnGet").click(function () {
+            var empIds = $("#txtId").val();
+            var empNames = $("#txtName").val();
+            var empSalarys = $("#txtSalary").val();
+            $.ajax({
+                type: "POST",
+                url: "/Home/AjaxMethod",
+                data: '{empId: "' + empIds + '" , empName: "' + empNames + '" , empSalary: "' + empSalarys + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert("Hello: " + response.EmpName + " Your Employee Id Is: " + response.EmpId + "And Your Salary Is: " + response.EmpSalary);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });
+    });
+
+
+</script>
