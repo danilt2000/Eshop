@@ -4,6 +4,7 @@ using Eshop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Eshop.Migrations
 {
     [DbContext(typeof(EshopContext))]
-    partial class EshopContextModelSnapshot : ModelSnapshot
+    [Migration("20220928122357_InitialMigration34")]
+    partial class InitialMigration34
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,48 +84,6 @@ namespace Eshop.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Notebook",
-                            Name = "EliteBook",
-                            Price = 4,
-                            Type = 3
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Multicooker",
-                            Name = "Multicooker",
-                            Price = 4,
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Mouse",
-                            Name = "Mouse",
-                            Price = 4,
-                            Type = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Notebook",
-                            Name = "Wire",
-                            Price = 4,
-                            Type = 3
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "AutoWire",
-                            Name = "AutoWire",
-                            Price = 4,
-                            Type = 4
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
