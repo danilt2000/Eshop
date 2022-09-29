@@ -94,7 +94,10 @@
 									<form method="post" asp-controller="Products" asp-action="AddToBasket" asp-route-id="@item.Id">
 										<div type="submit" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 											<div class="text-center">
-												<input class="btn btn-outline-dark mt-auto" type="submit" value="Add to cart" />
+												@*<input class="btn btn-outline-dark mt-auto" type="button" value="Add to cart" />*@
+												@*<input type="button" id="btnGet" class="btn btn-success" value="Ajax Call Type 1" />*@
+												<input type ="button" class="btn-success" value="Buy" style="font-size:1.4em;text-align:center"
+										   onclick="Buy(@item.Id,@backetId)" />
 											</div>
 										</div>
 									</form>
@@ -142,29 +145,16 @@
 	</div>
 </section>
 <script type="text/javascript">
-	 $(function () {
-        $("#btnGet").click(function () {
-            var empIds = $("#txtId").val();
-            var empNames = $("#txtName").val();
-            var empSalarys = $("#txtSalary").val();
-            $.ajax({
-                type: "POST",
-                url: "/Home/AjaxMethod",
-                data: '{empId: "' + empIds + '" , empName: "' + empNames + '" , empSalary: "' + empSalarys + '" }',
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    alert("Hello: " + response.EmpName + " Your Employee Id Is: " + response.EmpId + "And Your Salary Is: " + response.EmpSalary);
-                },
-                failure: function (response) {
-                    alert(response.responseText);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                }
-            });
-        });
-    });
+	function Buy(productId,backetId)
+	{$.ajax({type: "POST",
+	url: "/Products/AddProductToSession",
+	data: { productId: productId,backetId: backetId},
+	dataType: "text",
+	success: function(response) {
+	alert("gf");
+	
+	},
+	error: function(req, status, error) {$(outElementId).text('error during buying!');}});}
 
 
 </script>
