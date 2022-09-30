@@ -8,6 +8,7 @@
 	ViewData["Title"] = "Index";
 	string userid = "";
 }
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <header class="bg-dark py-5">
 	<div class="container px-4 px-lg-5 my-5">
@@ -96,13 +97,13 @@
 											<div class="text-center">
 												@*<input class="btn btn-outline-dark mt-auto" type="button" value="Add to cart" />*@
 												@*<input type="button" id="btnGet" class="btn btn-success" value="Ajax Call Type 1" />*@
-												<input type ="button" class="btn-success" value="Buy" style="font-size:1.4em;text-align:center"
-										   onclick="Buy(@item.Id,@backetId)" />
+												
+												@*class="btn-success"*@
+												<input type ="button" class="btn btn-outline-dark mt-auto " value="Add to cart" 
+										   onclick="Buy(@item.Id,@backetId); change(this) " >
 											</div>
 										</div>
 									</form>
-
-
 								</div>
 							</div>
 							Console.WriteLine("The collection does not contain exactly one element.");
@@ -145,16 +146,25 @@
 	</div>
 </section>
 <script type="text/javascript">
+
 	function Buy(productId,backetId)
 	{$.ajax({type: "POST",
 	url: "/Products/AddProductToSession",
 	data: { productId: productId,backetId: backetId},
 	dataType: "text",
 	success: function(response) {
-	alert("gf");
-	
+		
 	},
 	error: function(req, status, error) {$(outElementId).text('error during buying!');}});}
+
+	var color = 'black'; // Либо hex #fafafa и т.д.
+
+// Менять цвет при клике, либо сразу после загрузки dom
+function change(identifier) {
+ identifier.style.background = color;
+ identifier.value="Added";
+ identifier.style.color='white';
+}
 
 
 </script>
