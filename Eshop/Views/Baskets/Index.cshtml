@@ -1,0 +1,92 @@
+﻿@using Eshop.Data
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@model IEnumerable<Eshop.Models.Product>
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@inject EshopContext _context;
+@{
+	ViewData["Title"] = "Index";
+	//Layout = null;
+}
+@if (SignInManager.IsSignedIn(User))
+{
+	string userName = User.Identity?.Name;
+
+	var id = _context.Users.Where(a => a.UserName == userName).ToList();
+	string userid = id[0].Id;
+	var actualBasketId = _context.Baskets.Single(a => a.UserID == userid).Id;
+
+
+	<div class="container">
+
+		<div class="row">
+
+			<div class="col-8">
+
+				<div style="margin-left: 35px;  margin-top:30px;">
+
+
+					<h1>
+						Košík
+					</h1>
+				</div>
+				@foreach (var item in Model)
+				{
+					int hasproduct;
+					try
+					{
+						hasproduct = _context.BasketProduct.Where(b => b.BasketId == actualBasketId).Single(b => b.ProductId == item.Id).ProductId;
+						<div style=" height: 300px;
+							background-color:	rgba(222, 231, 236, 0.212);
+							margin-left: 35px;
+							margin-top:30px;
+							border: 6px ;
+							border-radius: 25px;">
+							<h1 style="padding-top: 30px; padding-left: 30px;">
+								@Html.DisplayFor(modelItem => item.Name)
+							</h1>
+							<h1 style="padding-top: 30px; padding-left: 30px;">
+								@Html.DisplayFor(modelItem => item.Price)
+							</h1>
+							<h1 style="padding-top: 30px; padding-left: 30px;">
+								@Html.DisplayFor(modelItem => item.Type)
+							</h1>
+						</div>
+					}
+					catch (System.InvalidOperationException)
+					{
+
+
+
+					}
+
+				}
+				@{
+					int countProducts = _context.BasketProduct.Where(b => b.BasketId == actualBasketId).Count();
+					if (countProducts == 0)
+					{
+						<div style=" height: 1000px;
+								background-color:	rgba(222, 231, 236, 0.212);
+								margin-left: 35px;
+								margin-top:30px;
+								border: 6px ;
+								border-radius: 25px;
+	 	margin-bottom: 30px;
+		">
+						</div>
+
+					}
+
+				}
+
+
+			</div>
+
+
+		</div>
+
+
+	</div>
+}
