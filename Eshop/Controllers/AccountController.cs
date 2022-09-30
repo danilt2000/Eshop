@@ -60,13 +60,6 @@ namespace Eshop.Controllers
 
                     return RedirectToAction("Index", "Products");
                 }
-                //            foreach (var error Ein result.Errors)
-                //{
-                //                ModelState.AddModelError("", errorMessage.)
-
-                //            }
-
-
             }
             return View(model);
 
@@ -86,25 +79,13 @@ namespace Eshop.Controllers
 
             if (ModelState.IsValid)
             {
-                //IdentityUser User = new IdentityUser { UserName = model.Name };
+
                 var result = await signInManager.PasswordSignInAsync(Name, Password, true, false);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Products");
 
                 }
-
-                //            if (result.Succeeded)
-                //{
-                //	await signInManager.SignInAsync(User, isPersistent: true);// false без сохранения
-                //	return RedirectToAction("Index", "Products");
-                //}
-                //            foreach (var error Ein result.Errors)
-                //{
-                //                ModelState.AddModelError("", errorMessage.)
-
-                //            }
-
 
 
             }

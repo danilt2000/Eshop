@@ -8,16 +8,28 @@ using Microsoft.EntityFrameworkCore;
 using Eshop.Data;
 using Eshop.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Identity;
 
 namespace Eshop.Controllers
 {
     public class ProductsController : Controller
     {
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
         private readonly EshopContext _context;
+        //RoleManager<IdentityRole> roleManager;
 
-        public ProductsController(EshopContext context)
+        public ProductsController(UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            //RoleManager<IdentityRole> roleManager,
+            EshopContext context)
         {
-            _context = context;
+
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            //this.roleManager=roleManager; //добавление роли 
+            this._context = context;
+
         }
 
         // GET: Products
@@ -25,9 +37,13 @@ namespace Eshop.Controllers
         {
 
 
+            string userName = User.Identity?.Name;
 
+            string userid = _context.Users.Single(a => a.UserName == userName).Id;
 
+            int backetId = _context.Baskets.Single(a => a.UserID == userid).Id;
 
+            ViewData["CountOfProducts"]= _context.BasketProduct.Where(a => backetId == a.BasketId).Count();
             //foreach (var item in Model)
             //{
             //    if (item.BasketID != 0)
@@ -86,6 +102,13 @@ namespace Eshop.Controllers
                 }
             }
 
+            string userName = User.Identity?.Name;
+
+            string userid = _context.Users.Single(a => a.UserName == userName).Id;
+
+            int thisbasket = _context.Baskets.Single(a => a.UserID == userid).Id;
+
+            ViewData["CountOfProducts"] = _context.BasketProduct.Where(a => thisbasket == a.BasketId).Count();
             return Json("Success");
 
         }
