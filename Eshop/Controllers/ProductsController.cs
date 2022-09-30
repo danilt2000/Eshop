@@ -37,13 +37,13 @@ namespace Eshop.Controllers
         {
 
 
-            string userName = User.Identity?.Name;
+            //string userName = User.Identity?.Name;
 
-            string userid = _context.Users.Single(a => a.UserName == userName).Id;
+            //string userid = _context.Users.Single(a => a.UserName == userName).Id;
 
-            int backetId = _context.Baskets.Single(a => a.UserID == userid).Id;
+            //int backetId = _context.Baskets.Single(a => a.UserID == userid).Id;
 
-            ViewData["CountOfProducts"]= _context.BasketProduct.Where(a => backetId == a.BasketId).Count();
+            //ViewData["CountOfProducts"]= _context.BasketProduct.Where(a => backetId == a.BasketId).Count();
             //foreach (var item in Model)
             //{
             //    if (item.BasketID != 0)
@@ -102,13 +102,6 @@ namespace Eshop.Controllers
                 }
             }
 
-            string userName = User.Identity?.Name;
-
-            string userid = _context.Users.Single(a => a.UserName == userName).Id;
-
-            int thisbasket = _context.Baskets.Single(a => a.UserID == userid).Id;
-
-            ViewData["CountOfProducts"] = _context.BasketProduct.Where(a => thisbasket == a.BasketId).Count();
             return Json("Success");
 
         }
