@@ -38,12 +38,12 @@ namespace Eshop.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Register(User model, string Password)
+        public async Task<IActionResult> Register(User model, string Password,string email,string phoneNumber)
         {
 
             if (ModelState.IsValid)
             {
-                IdentityUser User = new IdentityUser { UserName = model.Name };
+                IdentityUser User = new IdentityUser { UserName = model.Name ,Email= email, PhoneNumber= phoneNumber };
                 var result = await userManager.CreateAsync(User, Password);
 
                 if (result.Succeeded)

@@ -1,6 +1,174 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿@using Eshop.Data
+@using Microsoft.AspNetCore.Identity
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+	Layout = "_Main";
+
 }
-<h1>Admin</h1>
+<h1>Admin:@User.Identity?.Name</h1>
+@*@model Eshop.Models.Product*@
+@model IEnumerable<Eshop.Models.Product>
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject EshopContext _context;
+@{
+	ViewData["Title"] = "Admin";
+}
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Products
+				@*@Html.DisplayNameFor(model => model.Name)*@
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Description)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Price)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Type)
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Description)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Price)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Price)
+				</td>
+				<td>
+					<a asp-area="" asp-action="EditProduct" asp-controller="Admin" asp-route-id="@item.Id">Edit</a> |
+					<a  type ="button" @*asp-action="DeleteProducts" *@  onclick="Buy(@item.Id)" @*asp-route-id="@item.Id"*@>Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Users
+				@*@Html.DisplayNameFor(model => model.Name)*@
+			</th>
+			<th>
+				Email
+			</th>
+			<th>
+				PhoneNumber
+			</th>
+
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in _context.Users.ToList())
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.UserName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Email)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.PhoneNumber)
+				</td>
+
+				<td>
+					<a asp-area="" asp-action="EditProduct" asp-controller="Admin" asp-route-id="@item.Id">Edit</a> |
+					<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+					<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Busket Id
+			</th>
+			<th>
+				Busket Name
+			</th>
+			<th>
+				Owner  UserID
+			</th>
+
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in _context.Baskets.ToList())
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Id)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.UserID)
+				</td>
+
+				<td>
+					<a asp-area="" asp-action="EditProduct" asp-controller="Admin" asp-route-id="@item.Id ">Edit</a> |
+					<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+					<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+<script type="text/javascript">
+
+	function Buy(productId)
+	{$.ajax({type: "POST",
+	url: "~/Areas/Admin/Views/Admin/DeleteProducts",
+	data: { productId: productId},
+	dataType: "text",
+	success: function(response) {
+		
+	},
+	error: function(req, status, error) {$(outElementId).text('error during buying!');}});}
+
+//	var color = 'black'; // Либо hex #fafafa и т.д.
+
+//// Менять цвет при клике, либо сразу после загрузки dom
+//function change(identifier) {
+// identifier.style.background = color;
+// identifier.value="Added";
+// identifier.style.color='white';
+
+
+//}
+
+
+</script>
+
+
+@section Scripts {
+    @{
+	await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

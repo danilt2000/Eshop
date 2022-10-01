@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Eshop.Areas.Admin.Controllers
 {
+   
     public class AdminController : Controller
     {
         private readonly UserManager<IdentityUser> userManager;
@@ -32,7 +33,7 @@ namespace Eshop.Areas.Admin.Controllers
         [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
-            return View("~/Areas/Admin/Views/Admin/Index.cshtml");
+            return View("~/Areas/Admin/Views/Admin/Index.cshtml", _context.Products.ToList());
         }
 
         // GET: AdminController/Details/5
@@ -64,7 +65,7 @@ namespace Eshop.Areas.Admin.Controllers
 
 
         // GET: Products/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> EditProduct(int? id)
         {
             if (id == null || _context.Products == null)
             {
@@ -76,7 +77,7 @@ namespace Eshop.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View(product);
+            return View("~/Areas/Admin/Views/Admin/EditProduct.cshtml", product);
         }
 
         // POST: Products/Edit/5
@@ -84,7 +85,7 @@ namespace Eshop.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductID,Name,Description,Price,Type")] Product product)
+        public async Task<IActionResult> EditProduct(int id, [Bind("Id,Name,Description,Price,Type")] Product product)
         {
             if (id != product.Id)
             {
@@ -111,28 +112,46 @@ namespace Eshop.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View("~/Areas/Admin/Views/Admin/EditProduct.cshtml", product);
+
         }
 
-        // GET: AdminController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: AdminController/Delete/5
+		// GET: Products/Delete/5
+		public async Task<IActionResult> DeleteProducts(int? id)
+		{
+			if (id == null || _context.Products == null)
+			{
+				return NotFound();
+			}
+
+			var product = await _context.Products
+                .FirstOrDefaultAsync(m => m.Id == id);
+			if (product == null)
+			{
+				return NotFound();
+			}
+
+			return View(product);
+		}
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+        public async Task<JsonResult> DeleteProducts(int id)
+		{
+			if (_context.Products == null)
+			{
+				//return Problem("Entity set 'EshopContext.Product'  is null.");
+			}
+			var product = await _context.Products.FindAsync(id);
+			if (product != null)
+			{
+				_context.Products.Remove(product);
+			}
+
+			await _context.SaveChangesAsync();
+            //return RedirectToAction(nameof(Index));
+            return Json("Success");
+
         }
         private bool ProductExists(int id)
         {
