@@ -6,7 +6,10 @@
 @inject EshopContext _context;
 @{
 	ViewData["Title"] = "Index";
+	string userid = "";
 }
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <header class="bg-dark py-5">
 	<div class="container px-4 px-lg-5 my-5">
 		<div class="text-center text-white">
@@ -15,73 +18,153 @@
 		</div>
 	</div>
 </header>
-
-
 <section class="py-5">
 	<div class="container px-4 px-lg-5 mt-5">
 		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
 			@if (SignInManager.IsSignedIn(User))
 			{
-				
-				
-
 				string userName = User.Identity?.Name;
 
-
 				var id = _context.Users.Where(a => a.UserName == userName).ToList();
+				userid = id[0].Id;
+				var backetId = _context.Baskets.Single(a => a.UserID == userid).Id;
+
 				@foreach (var item in id)
 				{
-					@User.Identity?.Name 
+					@User.Identity?.Name
 					string temp = " ";
 					@temp
 					@item.Id
 				}
-			}
+
+				var correctBasket = _context.Baskets.Where(basket => basket.UserID == userid).ToList();
+				if (correctBasket != null)
+				{
+					@foreach (var item in Model)
+					{
+						int hasproduct;
+						try
+						{
+							hasproduct = _context.BasketProduct.Where(b => b.BasketId == backetId).Single(b => b.ProductId == item.Id).ProductId;
 
 
-
-
-			@foreach (var item in Model)
-			{
-				<div class="col mb-5">
-					<div class="card h-100">
-						<!-- Product image-->
+							<div class="col mb-5">
+								<div class="card h-100">
+									<!-- Product image-->
 					<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-						<!-- Product details-->
+									<!-- Product details-->
 					<div class="card-body p-4">
-							<div class="text-center">
-								<!-- Product name-->
+										<div class="text-center">
+											<!-- Product name-->
 							<h5 class="fw-bolder">@Html.DisplayFor(modelItem => item.Name)</h5>
-								<!-- Product price-->
-								$@Html.DisplayFor(modelItem => item.Price)
+											<!-- Product price-->
+											$@Html.DisplayFor(modelItem => item.Price)
+										</div>
+									</div>
+
+									<form method="post" asp-controller="Products" asp-action="AddToBasket" asp-route-id="@item.Id">
+										<div type="submit" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+											<div class="text-center">
+												<input class="btn btn-dark mt-auto" type="submit" value="Added" />
+											</div>
+										</div>
+									</form>
+
+								</div>
 							</div>
-						</div>
-						<!-- Product actions-->
-						@{
-							if (item.BasketID == 0)
-							{
-								<form method="post" asp-controller="Products" asp-action="AddToBasket" asp-route-id="@item.ProductID">
-									<div type="submit" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-										<div class="text-center">
-											<input class="btn btn-outline-dark mt-auto" type="submit" value="Add to cart" />
-										</div>
-									</div>
-								</form>
-							}
-							else
-							{
-								<form method="post" asp-controller="Products" asp-action="AddToBasket" asp-route-id="@item.ProductID">
-									<div type="submit" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-										<div class="text-center">
-											<input class="btn btn-dark mt-auto" type="submit" value="Added" />
-										</div>
-									</div>
-								</form>
-							}
 						}
+						catch (System.InvalidOperationException)
+						{
+
+							<div class="col mb-5">
+								<div class="card h-100">
+									<!-- Product image-->
+					<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+									<!-- Product details-->
+					<div class="card-body p-4">
+										<div class="text-center">
+											<!-- Product name-->
+							<h5 class="fw-bolder">@Html.DisplayFor(modelItem => item.Name)</h5>
+											<!-- Product price-->
+											$@Html.DisplayFor(modelItem => item.Price)
+										</div>
+									</div>
+									<form method="post" asp-controller="Products" asp-action="AddToBasket" asp-route-id="@item.Id">
+										<div type="submit" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+											<div class="text-center">
+												@*<input class="btn btn-outline-dark mt-auto" type="button" value="Add to cart" />*@
+												@*<input type="button" id="btnGet" class="btn btn-success" value="Ajax Call Type 1" />*@
+												
+												@*class="btn-success"*@
+												<input type ="button" class="btn btn-outline-dark mt-auto " value="Add to cart" 
+										   onclick="Buy(@item.Id,@backetId); change(this) " >
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							Console.WriteLine("The collection does not contain exactly one element.");
+						}
+					}
+				}
+			}
+			else
+			{
+				@foreach (var item in Model)
+				{
+
+					<div class="col mb-5">
+						<div class="card h-100">
+							<!-- Product image-->
+					<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+							<!-- Product details-->
+					<div class="card-body p-4">
+								<div class="text-center">
+									<!-- Product name-->
+							<h5 class="fw-bolder">@Html.DisplayFor(modelItem => item.Name)</h5>
+									<!-- Product price-->
+									$@Html.DisplayFor(modelItem => item.Price)
+								</div>
+							</div>
+
+							<form method="post" asp-controller="Products" asp-action="AddToBasket" asp-route-id="@item.Id">
+								<div type="submit" class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+									<div class="text-center">
+										<input class="btn btn-outline-dark mt-auto" type="submit" value="Add to cart" />
+									</div>
+								</div>
+							</form>
+
+						</div>
 					</div>
-				</div>
+				}
 			}
 		</div>
 	</div>
 </section>
+<script type="text/javascript">
+
+	function Buy(productId,backetId)
+	{$.ajax({type: "POST",
+	url: "/Products/AddProductToSession",
+	data: { productId: productId,backetId: backetId},
+	dataType: "text",
+	success: function(response) {
+		
+	},
+	error: function(req, status, error) {$(outElementId).text('error during buying!');}});}
+
+	var color = 'black'; // Либо hex #fafafa и т.д.
+
+// Менять цвет при клике, либо сразу после загрузки dom
+function change(identifier) {
+ identifier.style.background = color;
+ identifier.value="Added";
+ identifier.style.color='white';
+
+
+}
+
+
+</script>

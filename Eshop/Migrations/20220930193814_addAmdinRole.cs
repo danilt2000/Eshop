@@ -4,7 +4,7 @@
 
 namespace Eshop.Migrations
 {
-    public partial class Basket3 : Migration
+    public partial class addAmdinRole : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

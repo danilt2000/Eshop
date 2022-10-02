@@ -4,7 +4,7 @@
 
 namespace Eshop.Migrations
 {
-    public partial class AddUser25 : Migration
+    public partial class ChangeModel6 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

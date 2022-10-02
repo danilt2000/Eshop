@@ -20,12 +20,12 @@ namespace Eshop.Controllers
             //RoleManager<IdentityRole> roleManager,
             EshopContext context)
         {
-            
+
             this.userManager = userManager;
             this.signInManager = signInManager;
             //this.roleManager=roleManager; //добавление роли 
             this._context = context;
-         
+
         }
 
 
@@ -34,32 +34,33 @@ namespace Eshop.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            
+
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Register(User model, string Password)
+        public async Task<IActionResult> Register(User model, string Password,string email,string phoneNumber)
         {
 
             if (ModelState.IsValid)
             {
-                IdentityUser User = new IdentityUser { UserName = model.Name };
+                IdentityUser User = new IdentityUser { UserName = model.Name ,Email= email, PhoneNumber= phoneNumber };
                 var result = await userManager.CreateAsync(User, Password);
 
                 if (result.Succeeded)
-				{
-					await signInManager.SignInAsync(User, isPersistent: true);// false без сохранения
-					return RedirectToAction("Index", "Products");
-				}
-				//            foreach (var error Ein result.Errors)
-				//{
-				//                ModelState.AddModelError("", errorMessage.)
+                {
+                    await signInManager.SignInAsync(User, isPersistent: true);// false без сохранения
 
-				//            }
+                    Basket basket = new Basket { Name = $"{model.Name}'s basket",UserID=User.Id };
 
+                    _context.Add(basket);
+
+                    await _context.SaveChangesAsync();
 
 
-			}
+
+                    return RedirectToAction("Index", "Products");
+                }
+            }
             return View(model);
 
 
@@ -69,7 +70,7 @@ namespace Eshop.Controllers
         [HttpGet]
         public ActionResult SignIn()
         {
-            
+
             return View();
         }
         [HttpPost]
@@ -78,25 +79,13 @@ namespace Eshop.Controllers
 
             if (ModelState.IsValid)
             {
-                //IdentityUser User = new IdentityUser { UserName = model.Name };
-                 var result = await signInManager.PasswordSignInAsync(Name, Password, true,false);
-				if (result.Succeeded)
-				{
-                return RedirectToAction("Index", "Products");
 
-				}
-                
-                //            if (result.Succeeded)
-                //{
-                //	await signInManager.SignInAsync(User, isPersistent: true);// false без сохранения
-                //	return RedirectToAction("Index", "Products");
-                //}
-                //            foreach (var error Ein result.Errors)
-                //{
-                //                ModelState.AddModelError("", errorMessage.)
+                var result = await signInManager.PasswordSignInAsync(Name, Password, true, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Products");
 
-                //            }
-
+                }
 
 
             }

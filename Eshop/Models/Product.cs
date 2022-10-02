@@ -2,7 +2,7 @@
 {
     public class Product
     {
-        public int ProductID { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; } = string.Empty;
 
@@ -10,7 +10,7 @@
 
         public int Price { get; set; }
 
-        public int BasketID { get; set; }
+        public List<BasketProduct> Baskets { get; set; } = new();
 
         public ProductType Type { get; set; }
     }
