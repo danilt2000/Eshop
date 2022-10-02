@@ -14,13 +14,9 @@ namespace Eshop.Models
 		public int Id { get; set; }
 
 		public string Name { get; set; }
-
-		//[Required]
-		//[Datatype(DataType.Password)]
-		//[Compare("Password")]
 		public string Password { get; set; }
+		public string Email { get; set; }
 
-
-
+		public string PhoneNumber { get; set; }
 	}
 }

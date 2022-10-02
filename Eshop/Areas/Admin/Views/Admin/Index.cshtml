@@ -7,6 +7,9 @@
 	Layout = "_Main";
 
 }
+
+
+
 <h1>Admin:@User.Identity?.Name</h1>
 @*@model Eshop.Models.Product*@
 @model IEnumerable<Eshop.Models.Product>
@@ -49,16 +52,17 @@
 					@Html.DisplayFor(modelItem => item.Price)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Price)
+					@item.Type
 				</td>
 				<td>
 					<a asp-area="" asp-action="EditProduct" asp-controller="Admin" asp-route-id="@item.Id">Edit</a> |
-					<a  type ="button" @*asp-action="DeleteProducts" *@  onclick="Buy(@item.Id)" @*asp-route-id="@item.Id"*@>Delete</a>
+					<a asp-action="DeleteProduct" asp-controller="Admin"  asp-route-id="@item.Id">Delete</a> 
 				</td>
 			</tr>
 		}
 	</tbody>
 </table>
+					<a asp-action="CreateProduct" asp-controller="Admin" >Create Product</a>
 
 <table class="table">
 	<thead>
@@ -78,6 +82,7 @@
 	</thead>
 	<tbody>
 		@foreach (var item in _context.Users.ToList())
+		
 		{
 			<tr>
 				<td>
@@ -91,7 +96,7 @@
 				</td>
 
 				<td>
-					<a asp-area="" asp-action="EditProduct" asp-controller="Admin" asp-route-id="@item.Id">Edit</a> |
+					<a asp-area="" asp-action="EditUser" asp-controller="Admin" asp-route-id="@item.Id">Edit</a> |
 					<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
 					<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
 				</td>
@@ -140,31 +145,7 @@
 		}
 	</tbody>
 </table>
-<script type="text/javascript">
 
-	function Buy(productId)
-	{$.ajax({type: "POST",
-	url: "~/Areas/Admin/Views/Admin/DeleteProducts",
-	data: { productId: productId},
-	dataType: "text",
-	success: function(response) {
-		
-	},
-	error: function(req, status, error) {$(outElementId).text('error during buying!');}});}
-
-//	var color = 'black'; // Либо hex #fafafa и т.д.
-
-//// Менять цвет при клике, либо сразу после загрузки dom
-//function change(identifier) {
-// identifier.style.background = color;
-// identifier.value="Added";
-// identifier.style.color='white';
-
-
-//}
-
-
-</script>
 
 
 @section Scripts {
