@@ -4,13 +4,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Eshop.Data;
 using Microsoft.AspNetCore.Identity;
+using Braintree;
+using Eshop.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EshopContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("EshopContext") ?? throw new InvalidOperationException("Connection string 'EshopContext' not found.")));
 
  builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<EshopContext>().AddDefaultTokenProviders();//Добавление датабазы ддля регистрации 
-
 
 
 //здесь буду добавлять скопированное 2.7 2.8
@@ -39,6 +40,8 @@ builder.Services.ConfigureApplicationCookie(options => { options.Cookie.HttpOnly
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<IBraintreeService, Eshop.Services.BraintreeService>();
 
 var app = builder.Build();
 
