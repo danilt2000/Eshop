@@ -39,13 +39,19 @@
 					</li>
 				</ul>
 				@{
-				string userName = User.Identity?.Name;
+					int count = 0;
+					@if (SignInManager.IsSignedIn(User))
+			{
+					string userName = User.Identity?.Name;
 
 				var id = _context.Users.Where(a => a.UserName == userName).ToList();
 				string userid = id[0].Id;
 				var backetId = _context.Baskets.Single(a => a.UserID == userid).Id;
-						int	count= _context.BasketProduct.Where(b => b.BasketId == backetId).Count();
+							count= _context.BasketProduct.Where(b => b.BasketId == backetId).Count();
 
+
+
+			}
 				}
 
 				<form  asp-area="" asp-controller="Baskets" asp-action="Index" class="d-flex">
