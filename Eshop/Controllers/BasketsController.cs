@@ -18,23 +18,26 @@ namespace Eshop.Controllers
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly EshopContext _context;
         //RoleManager<IdentityRole> roleManager;
+        private readonly ILogger<HomeController> _logger;
 
         public BasketsController(UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             //RoleManager<IdentityRole> roleManager,
-            EshopContext context)
+            EshopContext context, ILogger<HomeController> logger)
         {
 
             this.userManager = userManager;
             this.signInManager = signInManager;
             //this.roleManager=roleManager; //добавление роли 
             this._context = context;
-
+            this._logger = logger;
         }
 
         // GET: Baskets
         public async Task<IActionResult> Index()
         {
+            _logger.LogInformation("This is the Basket page");
+            _logger.LogInformation($"Count of all Products{_context.Products.Count()}");
 
 
 
