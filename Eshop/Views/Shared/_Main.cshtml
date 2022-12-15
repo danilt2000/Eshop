@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Eshop.Data
+@inject EshopContext _context;
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using Microsoft.AspNetCore.Identity
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -32,12 +38,27 @@
 						</ul>
 					</li>
 				</ul>
-				
+				@{
+					int count = 0;
+					@if (SignInManager.IsSignedIn(User))
+			{
+					string userName = User.Identity?.Name;
+
+				var id = _context.Users.Where(a => a.UserName == userName).ToList();
+				string userid = id[0].Id;
+				var backetId = _context.Baskets.Single(a => a.UserID == userid).Id;
+							count= _context.BasketProduct.Where(b => b.BasketId == backetId).Count();
+
+
+
+			}
+				}
+
 				<form  asp-area="" asp-controller="Baskets" asp-action="Index" class="d-flex">
 					<button class="btn btn-outline-dark" type="submit">
 						<i class="bi-cart-fill me-1"></i>
 						Cart
-						<span class="badge bg-dark text-white ms-1 rounded-pill">@ViewData["CountOfProducts"]</span>
+						<span id="basket" class="badge bg-dark text-white ms-1 rounded-pill">@count</span>
 					</button>
 				</form>
 			</div>

@@ -1,7 +1,6 @@
 ﻿using Eshop.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-
 namespace Eshop.Controllers
 {
     public class HomeController : Controller
@@ -15,7 +14,11 @@ namespace Eshop.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            string Message = $"Home/Index pagevisitedat{DateTime.UtcNow.ToLongTimeString()}";
+
+            _logger.LogInformation("Messagedisplayed: {Message}", Message);
+            _logger.LogInformation("This is the home page");
+            return View("Index");
         }
 
         public IActionResult Privacy()

@@ -60,7 +60,11 @@ namespace Eshop.Controllers
 
             return View(await _context.Products.ToListAsync());
         }
-
+        public int Add(int num1, int num2)
+        {
+            int num3 = num1 + num2;
+            return num3;
+        }
         [HttpPost]
         public async Task<JsonResult> AddProductToSession(string productId, string backetId)
         {
