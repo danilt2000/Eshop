@@ -64,6 +64,10 @@ namespace Eshop.Controllers
 		{
 			return View();
 		}
+		public IActionResult MainPage()
+		{
+			return View();
+		}
 
 		public int Add(int num1, int num2)
 		{

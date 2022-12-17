@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Eshop Site</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Open+Sans">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+	<style>
+		.header-info__logo {
+		    background-image: url(/assets/images/DnsLogo.png);
+		    background-size: contain;
+		    background-repeat: no-repeat;
+		    width: 120px;
+		    height: 26px;
+		}
+
+		body {
+		    background: #e2eaef;
+		    font-family: "Open Sans", sans-serif;
+		}
+
+		h2 {
+		    color: #000;
+		    font-size: 26px;
+		    font-weight: 300;
+		    text-align: center;
+		    text-transform: uppercase;
+		    position: relative;
+		    margin: 30px 0 60px;
+		}
+
+		    h2::after {
+			content: "";
+			width: 100px;
+			position: absolute;
+			margin: 0 auto;
+			height: 4px;
+			border-radius: 1px;
+			background: #7ac400;
+			left: 0;
+			right: 0;
+			bottom: -20px;
+		    }
+
+		.carousel {
+		    margin: 50px auto;
+		    padding: 0 70px;
+		}
+
+		    .carousel .item {
+			color: #747d89;
+			min-height: 325px;
+			text-align: center;
+			overflow: hidden;
+		    }
+
+		    .carousel .thumb-wrapper {
+			padding: 25px 15px;
+			background: #fff;
+			border-radius: 6px;
+			text-align: center;
+			position: relative;
+			box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+		    }
+
+		    .carousel .item .img-box {
+			height: 120px;
+			margin-bottom: 20px;
+			width: 100%;
+			position: relative;
+		    }
+
+		    .carousel .item img {
+			max-width: 100%;
+			max-height: 100%;
+			display: inline-block;
+			position: absolute;
+			bottom: 0;
+			margin: 0 auto;
+			left: 0;
+			right: 0;
+		    }
+
+		    .carousel .item h4 {
+			font-size: 18px;
+		    }
+
+		    .carousel .item h4, .carousel .item p, .carousel .item ul {
+			margin-bottom: 5px;
+		    }
+
+		    .carousel .thumb-content .btn {
+			color: #7ac400;
+			font-size: 11px;
+			text-transform: uppercase;
+			font-weight: bold;
+			background: none;
+			border: 1px solid #7ac400;
+			padding: 6px 14px;
+			margin-top: 5px;
+			line-height: 16px;
+			border-radius: 20px;
+		    }
+
+			.carousel .thumb-content .btn:hover, .carousel .thumb-content .btn:focus {
+			    color: #fff;
+			    background: #7ac400;
+			    box-shadow: none;
+			}
+
+			.carousel .thumb-content .btn i {
+			    font-size: 14px;
+			    font-weight: bold;
+			    margin-left: 5px;
+			}
+
+		    .carousel .carousel-control {
+			height: 44px;
+			width: 40px;
+			background: #7ac400;
+			margin: auto 0;
+			border-radius: 4px;
+			opacity: 0.8;
+		    }
+
+			.carousel .carousel-control:hover {
+			    background: #78bf00;
+			    opacity: 1;
+			}
+
+			.carousel .carousel-control i {
+			    font-size: 36px;
+			    position: absolute;
+			    top: 50%;
+			    display: inline-block;
+			    margin: -19px 0 0 0;
+			    z-index: 5;
+			    left: 0;
+			    right: 0;
+			    color: #fff;
+			    text-shadow: none;
+			    font-weight: bold;
+			}
+
+		    .carousel .item-price {
+			font-size: 13px;
+			padding: 2px 0;
+		    }
+
+			.carousel .item-price strike {
+			    opacity: 0.7;
+			    margin-right: 5px;
+			}
+
+		    .carousel .carousel-control.left i {
+			margin-left: -2px;
+		    }
+
+		    .carousel .carousel-control.right i {
+			margin-right: -4px;
+		    }
+
+		    .carousel .carousel-indicators {
+			bottom: -50px;
+		    }
+
+		.carousel-indicators li, .carousel-indicators li.active {
+		    width: 10px;
+		    height: 10px;
+		    margin: 4px;
+		    border-radius: 50%;
+		    border: none;
+		}
+
+		.carousel-indicators li {
+		    background: rgba(0, 0, 0, 0.2);
+		}
+
+		    .carousel-indicators li.active {
+			background: rgba(0, 0, 0, 0.6);
+		    }
+
+		.carousel .wish-icon {
+		    position: absolute;
+		    right: 10px;
+		    top: 10px;
+		    z-index: 99;
+		    cursor: pointer;
+		    font-size: 16px;
+		    color: #abb0b8;
+		}
+
+		    .carousel .wish-icon .fa-heart {
+			color: #ff6161;
+		    }
+
+		.star-rating li {
+		    padding: 0;
+		}
+
+		.star-rating i {
+		    font-size: 14px;
+		    color: #ffc000;
+		}
+	</style>
+	<script>
+		$(document).ready(function () {
+		    $(".wish-icon i").click(function () {
+			$(this).toggleClass("fa-heart fa-heart-o");
+		    });
+		});
+	</script>
+
+</head>
+<body>
+	<header>
+		<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+			<h5 class="my-0 mr-md-auto font-weight-normal header-info__logo"></h5>
+			@*   <div class="header-info__logo"></div>*@
+			<nav class="my-2 my-md-0 mr-md-3">
+				@*<a class="p-2 text-dark" href="#">Features</a>
+				<a class="p-2 text-dark" href="#">Enterprise</a>
+				<a class="p-2 text-dark" href="#">Support</a>*@
+				<a class="p-2 text-secondary font-family: inherit" href="#">Корзина</a>
+			</nav>
+			<a class="btn btn-outline-primary  font-family: inherit" href="#">Войти в аккаунт</a>
+		</div>
+	</header>
+
+	<div class="container my-4  text-white">
+		<div class="row">
+			<div class="col-6 p-3"> <img src="~/assets/images/MainBoard.jpg" alt="MainBoard"></div>
+		</div>
+	</div>
+	<div>
+		@RenderBody()
+	</div>
+	
+
+	@await RenderSectionAsync("Scripts", required: false)
+
+
+</body>
+</html>
