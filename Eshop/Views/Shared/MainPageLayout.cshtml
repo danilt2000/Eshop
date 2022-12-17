@@ -17,6 +17,7 @@
 
 
 	<style>
+
 		.header-info__logo {
 		    background-image: url(/assets/images/DnsLogo.png);
 		    background-size: contain;
@@ -234,19 +235,21 @@
 				<a class="p-2 text-dark" href="#">Support</a>*@
 				<a class="p-2 text-secondary font-family: inherit" href="#">Корзина</a>
 			</nav>
-			<a class="btn btn-outline-primary  font-family: inherit" href="#">Войти в аккаунт</a>
+				<a  class="btn btn-outline-primary  font-family: inherit" href="/Account/SignIn">Войти в аккаунт</a>
 		</div>
 	</header>
 
-	<div class="container my-4  text-white">
-		<div class="row">
-			<div class="col-6 p-3"> <img src="~/assets/images/MainBoard.jpg" alt="MainBoard"></div>
-		</div>
-	</div>
+
 	<div>
 		@RenderBody()
 	</div>
-	
+
+	<footer class="bg-dark text-white py-3 fixed-bottom">
+		<div class="container">
+			<p class="text-center mb-0">Copyright &copy; 2022 Univerzita Tomáše Bati</p>
+		</div>
+	</footer>
+
 
 	@await RenderSectionAsync("Scripts", required: false)
 

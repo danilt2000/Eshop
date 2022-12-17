@@ -64,9 +64,9 @@ namespace Eshop.Controllers
 		{
 			return View();
 		}
-		public IActionResult MainPage()
+		public async Task<IActionResult> MainPage()
 		{
-			return View();
+			return View(await _context.Products.ToListAsync());
 		}
 
 		public int Add(int num1, int num2)

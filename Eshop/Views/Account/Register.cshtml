@@ -1,11 +1,44 @@
-﻿
-@model Eshop.Models.User
+﻿@model Eshop.Models.User
 @{
-    ViewData["Title"] = "Register";
+	ViewData["Title"] = "Register";
+	Layout = "MainPageLayout";
+
 }
+<div class="container mt-5">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<h1 class="text-center">Sign Up</h1>
+			<form>
+				<div class="form-group">
+					<label for="username">Username</label>
+					<input type="text" class="form-control" id="username" placeholder="Enter a username">
+				</div>
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input type="email" class="form-control" id="email" placeholder="Enter your email">
+				</div>
+				<div class="form-group">
+					<label for="name">PhoneNumber</label>
+					<input type="text" class="form-control" id="phoneNumber" placeholder="Enter your PhoneNumber">
+				</div>
+				<div class="form-group">
+					<label for="password">Password</label>
+					<input type="password" class="form-control" id="password" placeholder="Enter a password">
+				</div>
+				<div class="form-group">
+					<label for="password-verification">Verify Password</label>
+					<input type="password" class="form-control" id="password-verification" placeholder="Verify your password">
+				</div>
+				<button type="submit" class="btn btn-primary" onclick="return checkPasswords()">Sign Up</button>
+			</form>
+			<div class="text-center mt-2">
+				<a href="#" class="btn btn-secondary">Already have an account?</a>
+			</div>
+		</div>
+	</div>
+</div>
 
-
-<h1>Create</h1>
+@*<h1>Create</h1>
 
 <h4>User</h4>
 <hr />
@@ -17,7 +50,7 @@
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div> 
+            </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
                 <input asp-for="Password" class="form-control" />
@@ -27,7 +60,7 @@
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
-            </div> 
+            </div>
             <div class="form-group">
                 <label asp-for="PhoneNumber" class="control-label"></label>
                 <input asp-for="PhoneNumber" class="form-control" />
@@ -42,8 +75,22 @@
 
 <div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	}
+
+	<script>
+		function checkPasswords() {
+		    var password = document.getElementById("password").value;
+		    var passwordVerification = document.getElementById("password-verification").value;
+		    if (password !== passwordVerification) {
+			alert("Passwords do not match!");
+			return false;
+		    }
+		    return true;
+		}
+	</script>
