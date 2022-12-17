@@ -8,14 +8,16 @@
 		<div class="col-md-6">
 			<h1 class="text-center">Login</h1>
 			<form asp-action="SignIn">
-				 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 				<div class="form-group">
-					<label for="username">Username</label>
-					<input type="text" class="form-control" id="username" placeholder="Enter username">
+					<label asp-for="Name" for="username">Username</label>
+					<input asp-for="Name" type="text" class="form-control" id="username" placeholder="Enter username">
+					<span asp-validation-for="Name" class="text-danger"></span>
 				</div>
 				<div class="form-group">
-					<label for="password">Password</label>
-					<input type="password" class="form-control" id="password" placeholder="Enter password">
+					<label asp-for="Password" for="password">Password</label>
+					<input asp-for="Password" type="password" class="form-control" id="password" placeholder="Enter password">
+					<span asp-validation-for="Password" class="text-danger"></span>
 				</div>
 				<button type="submit" class="btn btn-primary">Login</button>
 			</form>
@@ -25,32 +27,14 @@
 		</div>
 	</div>
 </div>
-
-
-<h1>SignIn</h1>
-
-<h4>User</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="SignIn">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+@if (ViewBag.Message != null)
+{
+	<script type="text/javascript">
+		window.onload = function () {
+		    alert("@ViewBag.Message");
+		};
+	</script>
+}
 
 @*<div>
 	<a asp-action="Index">Back to List</a>

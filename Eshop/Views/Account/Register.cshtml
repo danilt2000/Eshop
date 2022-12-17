@@ -8,73 +8,78 @@
 	<div class="row justify-content-center">
 		<div class="col-md-6">
 			<h1 class="text-center">Sign Up</h1>
-			<form>
+			<form asp-action="Register">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 				<div class="form-group">
-					<label for="username">Username</label>
-					<input type="text" class="form-control" id="username" placeholder="Enter a username">
+					<label asp-for="Name" for="Name">Name</label>
+					<input asp-for="Name" type="text" class="form-control" id="Name" placeholder="Enter a Name">
+					<span asp-validation-for="Name" class="text-danger"></span>
 				</div>
 				<div class="form-group">
-					<label for="email">Email</label>
-					<input type="email" class="form-control" id="email" placeholder="Enter your email">
+					<label asp-for="Email" for="Email">Email</label>
+					<input asp-for="Email" type="email" class="form-control" id="Email" placeholder="Enter your Email">
+					<span asp-validation-for="Email" class="text-danger"></span>
 				</div>
 				<div class="form-group">
-					<label for="name">PhoneNumber</label>
-					<input type="text" class="form-control" id="phoneNumber" placeholder="Enter your PhoneNumber">
+					<label asp-for="PhoneNumber" for="PhoneNumber">PhoneNumber</label>
+					<input asp-for="PhoneNumber" type="text" class="form-control" id="PhoneNumber" placeholder="Enter your PhoneNumber">
+					<span asp-validation-for="PhoneNumber" class="text-danger"></span>
 				</div>
 				<div class="form-group">
-					<label for="password">Password</label>
-					<input type="password" class="form-control" id="password" placeholder="Enter a password">
+					<label asp-for="Password" for="Password">Password</label>
+					<input asp-for="Password" type="password" class="form-control" id="Password" placeholder="Enter a Password">
+					<span asp-validation-for="Password" class="text-danger"></span>
 				</div>
 				<div class="form-group">
-					<label for="password-verification">Verify Password</label>
-					<input type="password" class="form-control" id="password-verification" placeholder="Verify your password">
+					<label for="Password-verification">Verify Password</label>
+					<input type="password" class="form-control" id="Password-verification" placeholder="Verify your Password">
 				</div>
 				<button type="submit" class="btn btn-primary" onclick="return checkPasswords()">Sign Up</button>
 			</form>
 			<div class="text-center mt-2">
-				<a href="#" class="btn btn-secondary">Already have an account?</a>
+				<a href="/Account/SignIn" class="btn btn-secondary">Already have an account?</a>
 			</div>
 		</div>
 	</div>
 </div>
-
-@*<h1>Create</h1>
+@*
+<h1>Create</h1>
 
 <h4>User</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Register">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+	<div class="col-md-4">
+		<form asp-action="Register">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Name" class="control-label"></label>
+				<input asp-for="Name" class="form-control" />
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Password" class="control-label"></label>
+				<input asp-for="Password" class="form-control" />
+				<span asp-validation-for="Password" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Email" class="control-label"></label>
+				<input asp-for="Email" class="form-control" />
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="PhoneNumber" class="control-label"></label>
+				<input asp-for="PhoneNumber" class="form-control" />
+				<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+	<a asp-action="Index">Back to List</a>
 </div>*@
 
 @section Scripts {
@@ -85,8 +90,26 @@
 
 	<script>
 		function checkPasswords() {
-		    var password = document.getElementById("password").value;
-		    var passwordVerification = document.getElementById("password-verification").value;
+		    //// an array
+		    //const arr = [1, 2, 3, 4, 5];
+
+		    //// convert array to JSON string
+		    //// using JSON.stringify()
+		    //const jsonArr = JSON.stringify(arr);
+
+
+		    ////myArr.push(8);
+
+		    ////console.log(myArr);
+		    //// [ 2, 4, 6, 8 ]
+
+		    //// save to localStorage
+		    //localStorage.setItem("array", jsonArr);
+
+			
+			
+			var password = document.getElementById("Password").value;
+		    var passwordVerification = document.getElementById("Password-verification").value;
 		    if (password !== passwordVerification) {
 			alert("Passwords do not match!");
 			return false;
