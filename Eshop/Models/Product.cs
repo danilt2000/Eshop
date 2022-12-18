@@ -1,25 +1,32 @@
-﻿namespace Eshop.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
+
+namespace Eshop.Models
 {
-    public class Product
-    {
-        public int Id { get; set; }
+	public class Product
+	{
+		public int Id { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+		public string Name { get; set; } = string.Empty;
 
-        public string Description { get; set; } = string.Empty;
+		public string Description { get; set; } = string.Empty;
 
-        public int Price { get; set; }
+		public int Price { get; set; }
 
-        public List<BasketProduct> Baskets { get; set; } = new();
+		public List<BasketProduct> Baskets { get; set; } = new();
 
-        public ProductType Type { get; set; }
-    }
-    public enum ProductType
-    {
-        HomeAppliances,
-        Instruments,
-        SmartphonesAndGadgets,
-        Computers,
-        AutoStuff,
-    }
+		[NotMapped]
+		[DisplayName("Upload File")]
+		public IFormFile ImageFile { get; set; }
+
+		public ProductType Type { get; set; }
+	}
+	public enum ProductType
+	{
+		HomeAppliances,
+		Instruments,
+		SmartphonesAndGadgets,
+		Computers,
+		AutoStuff,
+	}
 }
