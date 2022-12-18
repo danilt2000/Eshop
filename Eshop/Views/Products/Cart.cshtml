@@ -6,7 +6,8 @@
 *@
 @{
         ViewData["Title"] = "Cart";
-	Layout = "EshopLayout";
+        Layout = "EshopLayout";
+        int totalPrice = 0;
 }
  <header>
             <div class="header">
@@ -14,17 +15,14 @@
                 <div class="header-bottom">
                     <div class="header-info">
                         <div class="header-info__logo"></div>
-                        <a href="#" class="header-info__catalog"
-                            ><span>Каталог</span></a
+                                <a href="/Products/MainPage" class="header-info__catalog"><span>Каталог</span></a
                         >
                     </div>
                     <div class="header-list">
                         <div class="header-list__image"></div>
-                        <a href="#" class="header-list__cart"
-                            ><span>Корзина</span></a
+                                <a href="/Products/Cart" class="header-list__cart"><span>Корзина</span></a
                         >
-                        <a href="#" class="header-list__profile"
-                            ><span class="username">Данил</span></a
+                                <a href="/Products/MainPage" class="header-list__profile"><span class="username">Данил</span></a
                         >
                     </div>
                 </div>
@@ -35,9 +33,33 @@
             <section class="cards">
                 <div class="card-headline">
                     <h1 class="card-headline__title">Корзина</h1>
-                    <p class="card-headline__desc">3 товара</p>
+                    <p class="card-headline__desc">@Model.Count() товара</p>
                 </div>
-                <div class="container">
+
+                @foreach (var item in Model)
+                {
+                        <div class="container">
+                                <div class="cart-content">
+                                        <img src="~/assets/images/@item.ImageTitle"
+                                     alt=""
+                                     class="cart__img" />
+                                        <p class="cart__desc">
+                                                @item.Name: @item.Description
+                                        </p>
+
+                                        <div class="cart__price">
+                                                <p class="price">@item.Price $</p>
+                                        </div>
+                                        <p class="cart__type">
+                                                <span class="type">Тип продукта:</span> @item.Type
+                                        </p>
+                                </div>
+                        </div>
+                        totalPrice += item.Price;
+                       
+                }
+
+                @*<div class="container">
                     <div class="cart-content">
                         <img
                             src="assets/images/Telephone.jpg"
@@ -91,13 +113,13 @@
                             <span class="type">Тип продукта:</span> телефоны
                         </p>
                     </div>
-                </div>
+                </div>*@
                 <div class="container">
                     <div class="cart-buy">
                         <span class="subject">Итого:</span>
                         <div class="summary">
-                            <p class="summary__desc">3 товара</p>
-                            <p class="summary__price">182 797 ₽</p>
+                            <p class="summary__desc">@Model.Count() товара</p>
+                                        <p class="summary__price">@totalPrice $</p>
                         </div>
                         <button type="button" class="button__cart">
                             Перейти к оформлению

@@ -9,6 +9,7 @@ using Eshop.Data;
 using Eshop.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Identity;
+using System.Collections;
 
 namespace Eshop.Controllers
 {
@@ -47,12 +48,13 @@ namespace Eshop.Controllers
 
 				List<Product> ProductsMain = new List<Product>();
 
-				var basketProducts = _context.BasketProduct.Where(a => a.BasketId == backetId)
-				       .ToList();
-				foreach (var basket in basketProducts)
-				{
-					ProductsMain.Add(basket.Product);
-				}
+				var basketProducts = _context.BasketProduct
+					.Where(a => a.BasketId == backetId)
+				       .Select(x=>x.Product);
+				//foreach (var basket in basketProducts)
+				//{
+				//	ProductsMain.Add(basket.Product);
+				//}
 
 				//foreach (var product in _context.Products)
 				//{
@@ -62,7 +64,7 @@ namespace Eshop.Controllers
 				//		//Console.WriteLine("These entities are part of the same table.");
 				//	}
 				//}
-				return View(ProductsMain);
+				return View(basketProducts);
 
 				//var products=_context.Baskets.Skip(1).first
 
