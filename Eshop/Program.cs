@@ -4,6 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Eshop.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
+using Stripe;
+using server.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EshopContext>(options =>
