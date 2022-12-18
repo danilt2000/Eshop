@@ -33,9 +33,46 @@ namespace Eshop.Controllers
 		}
 
 		// GET: Products
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Cart()
 		{
+			if (signInManager.IsSignedIn(User))
+			{
+				string userName = User.Identity?.Name;
 
+				string userid = _context.Users.Single(a => a.UserName == userName).Id;
+
+				int backetId = _context.Baskets.Single(a => a.UserID == userid).Id;
+
+				//var backet = _context.Baskets.Single(a => a.UserID == userid);
+
+				List<Product> ProductsMain = new List<Product>();
+
+				var basketProducts = _context.BasketProduct.Where(a => a.BasketId == backetId)
+				       .ToList();
+				foreach (var basket in basketProducts)
+				{
+					ProductsMain.Add(basket.Product);
+				}
+
+				//foreach (var product in _context.Products)
+				//{
+				//	if (backet.GetType().IsAssignableFrom(product.GetType()))
+				//	{
+				//		ProductsMain.Add(product);
+				//		//Console.WriteLine("These entities are part of the same table.");
+				//	}
+				//}
+				return View(ProductsMain);
+
+				//var products=_context.Baskets.Skip(1).first
+
+				//var neco = _context.BasketProduct.ToDictionary();
+				//return View(await _context.BasketProduct.ToDictionary
+
+
+				//	ToListAsync());;
+
+			}
 
 			//string userName = User.Identity?.Name;
 
@@ -58,8 +95,16 @@ namespace Eshop.Controllers
 
 
 
+			return View();
+		}
+
+
+		public async Task<IActionResult> Index()
+		{
 			return View(await _context.Products.ToListAsync());
 		}
+
+
 		public async Task<IActionResult> AboutAsync(int? id)
 		{
 			if (id == null || _context.Products == null)
@@ -84,6 +129,10 @@ namespace Eshop.Controllers
 		public async Task<JsonResult> AddProductToSession(string productId, string backetId)
 		{
 
+			if (backetId == "9999")
+			{
+				return Json("");
+			}
 			string connectionString = "Server=(localdb)\\mssqllocaldb;Database=Eshop3.Data;Trusted_Connection=True;MultipleActiveResultSets=true";
 			//BasketProduct basketProduct = new BasketProduct { BasketId = Int16.Parse(backetId), ProductId = Int16.Parse(productId) };
 
@@ -120,7 +169,6 @@ namespace Eshop.Controllers
 					con.Close();
 				}
 			}
-
 			return Json("Success");
 
 		}

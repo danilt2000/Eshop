@@ -4,60 +4,80 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject EshopContext _context;
 @{
-        ViewData["Title"] = "About";
-        Layout = "EshopLayout";
-        string userid = "";
+	ViewData["Title"] = "About";
+	Layout = "EshopLayout";
+	string userid = "";
+	int backetId = 9999;
 }
 @if (SignInManager.IsSignedIn(User))
-			{
-				string userName = User.Identity?.Name;
+{
+	string userName = User.Identity?.Name;
 
-				var id = _context.Users.Where(a => a.UserName == userName).ToList();
-				userid = id[0].Id;
-				var backetId = _context.Baskets.Single(a => a.UserID == userid).Id;
-                        }
+	var id = _context.Users.Where(a => a.UserName == userName).ToList();
+	userid = id[0].Id;
+	 backetId = _context.Baskets.Single(a => a.UserID == userid).Id;
+}
 <header>
-        <div class="header">
-                <div class="header-top"></div>
-                <div class="header-bottom">
-                        <div class="header-info">
-                                <div class="header-info__logo"></div>
-                                <a href="#" class="header-info__catalog"><span>Каталог</span></a>
-                        </div>
-                        <div class="header-list">
-                                <div class="header-list__image"></div>
-                                <a href="#" class="header-list__cart"><span>Корзина</span></a>
-                                <a href="#" class="header-list__profile"><span class="username">Данил</span></a>
-                        </div>
-                </div>
-        </div>
+	<div class="header">
+		<div class="header-top"></div>
+		<div class="header-bottom">
+			<div class="header-info">
+				<div class="header-info__logo"></div>
+				<a href="#" class="header-info__catalog"><span>Каталог</span></a>
+			</div>
+			<div class="header-list">
+				<div class="header-list__image"></div>
+				<a href="#" class="header-list__cart"><span>Корзина</span></a>
+				<a href="#" class="header-list__profile"><span class="username">Данил</span></a>
+			</div>
+		</div>
+	</div>
 </header>
 <hr />
 <main>
 
-        <section class="card">
-                <div class="container">
-                        <h1 class="card__title">
-                               @Model.Name
-                        </h1>
-                        <div class="card-content">
-                                <img src="~/assets/images/@Model.ImageTitle"
-                                     alt="phone"
-                                     class="card__img" />
-                                <p class="card__desc">
-                                      @Model.Description
-                                       
-                                </p>
-                                <div class="card__price">
-                                        <p class="price">@Model.Price $</p>
-                                </div>
-                                <button type="button" style="height: 100%;" class="button__buy">
-                                        Купить
-                                </button>
-                                <p class="card__type">
-                                        <span class="type">Тип продукта:</span> @Model.Type
-                                </p>
-                        </div>
-                </div>
-        </section>
+	<section class="card">
+		<div class="container">
+			<h1 class="card__title">
+				@Model.Name
+			</h1>
+			<div class="card-content">
+				<img src="~/assets/images/@Model.ImageTitle"
+				     alt="phone"
+				     class="card__img" />
+				<p class="card__desc">
+					@Model.Description
+
+				</p>
+				<div class="card__price">
+					<p class="price">@Model.Price $</p>
+				</div>
+				@*<button onclick="Buy(@Model.Id,@backetId);" type="button" style="height: 100%;" class="button__buy">
+					Купить
+				</button>*@
+				<input type ="button" class="btn btn-outline-dark mt-auto " value="Add to cart"
+				       onclick="Buy(@Model.Id,@backetId);">
+				<p class="card__type">
+					<span class="type">Тип продукта:</span> @Model.Type
+				</p>
+			</div>
+		</div>
+	</section>
 </main>
+<script type="text/javascript">
+
+	function Buy(productId, backetId) {
+	    $.ajax({
+		type: "POST",
+		url: "/Products/AddProductToSession",
+		data: { productId: productId, backetId: backetId },
+		dataType: "text",
+		success: function (response) {
+		    window.location.href = "/Products/MainPage";
+		},
+		error: function (req, status, error) { $(outElementId).text('error during buying!'); }
+	    });
+	}
+
+
+</script>

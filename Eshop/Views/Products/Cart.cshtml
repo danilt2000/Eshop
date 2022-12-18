@@ -1,0 +1,108 @@
+﻿@using Eshop.Data
+@model IEnumerable<Eshop.Models.Product>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+        ViewData["Title"] = "Cart";
+	Layout = "EshopLayout";
+}
+ <header>
+            <div class="header">
+                <div class="header-top"></div>
+                <div class="header-bottom">
+                    <div class="header-info">
+                        <div class="header-info__logo"></div>
+                        <a href="#" class="header-info__catalog"
+                            ><span>Каталог</span></a
+                        >
+                    </div>
+                    <div class="header-list">
+                        <div class="header-list__image"></div>
+                        <a href="#" class="header-list__cart"
+                            ><span>Корзина</span></a
+                        >
+                        <a href="#" class="header-list__profile"
+                            ><span class="username">Данил</span></a
+                        >
+                    </div>
+                </div>
+            </div>
+        </header>
+        <hr />
+        <main>
+            <section class="cards">
+                <div class="card-headline">
+                    <h1 class="card-headline__title">Корзина</h1>
+                    <p class="card-headline__desc">3 товара</p>
+                </div>
+                <div class="container">
+                    <div class="cart-content">
+                        <img
+                            src="assets/images/Telephone.jpg"
+                            alt="phone"
+                            class="cart__img"
+                        />
+                        <p class="cart__desc">
+                            6.5" Смартфон Samsung Galaxy A53 5G 256 ГБ белый
+                        </p>
+                        <div class="cart__price">
+                            <p class="price">33 999 ₽</p>
+                        </div>
+                        <p class="cart__type">
+                            <span class="type">Тип продукта:</span> телефоны
+                        </p>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="cart-content">
+                        <img
+                            src="assets/images/iphone.jpg"
+                            alt="phone"
+                            class="cart__img"
+                        />
+                        <p class="cart__desc">
+                            6.1" Смартфон Apple iPhone 14 128 ГБ черный
+                        </p>
+                        <div class="cart__price">
+                            <p class="price">73 799 ₽</p>
+                        </div>
+                        <p class="cart__type">
+                            <span class="type">Тип продукта:</span> телефоны
+                        </p>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="cart-content">
+                        <img
+                            src="assets/images/samsung_flip.jpg"
+                            alt="phone"
+                            class="cart__img"
+                        />
+                        <p class="cart__desc">
+                            6.7" Смартфон Samsung Galaxy Z Flip4 256 ГБ
+                            фиолетовый
+                        </p>
+                        <div class="cart__price">
+                            <p class="price">74 999 ₽</p>
+                        </div>
+                        <p class="cart__type">
+                            <span class="type">Тип продукта:</span> телефоны
+                        </p>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="cart-buy">
+                        <span class="subject">Итого:</span>
+                        <div class="summary">
+                            <p class="summary__desc">3 товара</p>
+                            <p class="summary__price">182 797 ₽</p>
+                        </div>
+                        <button type="button" class="button__cart">
+                            Перейти к оформлению
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
