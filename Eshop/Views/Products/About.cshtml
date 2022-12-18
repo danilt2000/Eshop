@@ -28,7 +28,7 @@
 			<div class="header-list">
 				<div class="header-list__image"></div>
 				<a href="#" class="header-list__cart"><span>Корзина</span></a>
-				<a href="#" class="header-list__profile"><span class="username">Данил</span></a>
+				<a href="#" class="header-list__profile"><span class="username">@User.Identity?.Name</span></a>
 			</div>
 		</div>
 	</div>
@@ -73,7 +73,7 @@
 		data: { productId: productId, backetId: backetId },
 		dataType: "text",
 		success: function (response) {
-		    window.location.href = "/Products/MainPage";
+		    window.location.href = "/Products/Cart";
 		},
 		error: function (req, status, error) { $(outElementId).text('error during buying!'); }
 	    });

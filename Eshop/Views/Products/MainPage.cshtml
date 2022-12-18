@@ -1,10 +1,23 @@
 ﻿@using Eshop.Data
+@using Microsoft.AspNetCore.Identity
 @model IEnumerable<Eshop.Models.Product>
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject EshopContext _context;
 
 @{
 	Layout = "MainPageLayout";
 	int itemPosition = 0;
 	string pathImage = "";
+	string userName = User.Identity?.Name;
+
+	string userid = _context.Users.Single(a => a.UserName == userName).Id;
+
+	int backetId = _context.Baskets.Single(a => a.UserID == userid).Id;
+
+	var basketProducts = _context.BasketProduct
+					.Where(a => a.BasketId == backetId).Select(x => x.Product);
+					
 }
 <div class="container my-4  text-white">
 	<div class="row">
@@ -31,12 +44,20 @@
 							@{
 								foreach (var item in Model)
 								{
+
+
+									int idProduct = item.Id;
+									string backgroundColor="";
 									itemPosition++;
-									<div class="col-sm-3">
+									if (basketProducts.Any(x=>x.Id==idProduct))
+									{
+										 backgroundColor = "greenyellow";
+									}
+									<div  class="col-sm-3">
 										<div class="thumb-wrapper">
 											<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
 											<div class="img-box">
-												<img src="~/assets/images/@item.ImageTitle" class="img-responsive"   asp-append-version="true" alt="">
+												<img src="~/assets/images/@item.ImageTitle" class="img-responsive" asp-append-version="true" alt="">
 											</div>
 											<div class="thumb-content">
 												<h4>@item.Name</h4>
@@ -50,7 +71,7 @@
 													</ul>
 												</div>
 												<p class="item-price"><b>$@item.Price</b></p>
-												<a href="/Products/About/@item.Id" class="btn btn-primary">Add to Cart</a>
+												<a  style="background-color:@backgroundColor" href="/Products/About/@item.Id" class="btn btn-primary">Add to Cart</a>
 											</div>
 										</div>
 									</div>
@@ -70,6 +91,13 @@
 								foreach (var item in Model)
 								{
 									itemPosition++;
+									int idProduct = item.Id;
+									string backgroundColor = "";
+									if (basketProducts.Any(x => x.Id == idProduct))
+									{
+										backgroundColor = "greenyellow";
+									}
+
 									if (itemPosition > 4)
 									{
 										<div class="col-sm-3">
@@ -90,7 +118,7 @@
 														</ul>
 													</div>
 													<p class="item-price"><b>$@item.Price</b></p>
-													<a href="/Products/About/@item.Id" class="btn btn-primary">Add to Cart</a>
+													<a style="background-color:@backgroundColor" href="/Products/About/@item.Id" class="btn btn-primary">Add to Cart</a>
 												</div>
 											</div>
 										</div>
@@ -189,96 +217,96 @@
 						</div>
 					</div>
 					@*<div class="item">
-						<div class="row">
-							<div class="col-sm-3">
-								<div class="thumb-wrapper">
-									<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
-									<div class="img-box">
-										<img src="/examples/images/products/iphone.jpg" class="img-responsive" alt="">
-									</div>
-									<div class="thumb-content">
-										<h4>Apple iPhone</h4>
-										<p class="item-price"><strike>$369.00</strike> <span>$349.00</span></p>
-										<div class="star-rating">
-											<ul class="list-inline">
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-											</ul>
-										</div>
-										<a href="#" class="btn btn-primary">Add to Cart</a>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="thumb-wrapper">
-									<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
-									<div class="img-box">
-										<img src="/examples/images/products/canon.jpg" class="img-responsive" alt="">
-									</div>
-									<div class="thumb-content">
-										<h4>Canon DSLR</h4>
-										<p class="item-price"><strike>$315.00</strike> <span>$250.00</span></p>
-										<div class="star-rating">
-											<ul class="list-inline">
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-											</ul>
-										</div>
-										<a href="#" class="btn btn-primary">Add to Cart</a>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="thumb-wrapper">
-									<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
-									<div class="img-box">
-										<img src="/examples/images/products/pixel.jpg" class="img-responsive" alt="">
-									</div>
-									<div class="thumb-content">
-										<h4>Google Pixel</h4>
-										<p class="item-price"><strike>$450.00</strike> <span>$418.00</span></p>
-										<div class="star-rating">
-											<ul class="list-inline">
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star-half-o"></i></li>
-											</ul>
-										</div>
-										<a href="#" class="btn btn-primary">Add to Cart</a>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3">
-								<div class="thumb-wrapper">
-									<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
-									<div class="img-box">
-										<img src="/examples/images/products/watch.jpg" class="img-responsive" alt="">
-									</div>
-									<div class="thumb-content">
-										<h4>Apple Watch</h4>
-										<p class="item-price"><strike>$350.00</strike> <span>$330.00</span></p>
-										<div class="star-rating">
-											<ul class="list-inline">
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star"></i></li>
-												<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-											</ul>
-										</div>
-										<a href="#" class="btn btn-primary">Add to Cart</a>
-									</div>
-								</div>
-							</div>
-						</div>
+					<div class="row">
+					<div class="col-sm-3">
+					<div class="thumb-wrapper">
+					<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
+					<div class="img-box">
+					<img src="/examples/images/products/iphone.jpg" class="img-responsive" alt="">
+					</div>
+					<div class="thumb-content">
+					<h4>Apple iPhone</h4>
+					<p class="item-price"><strike>$369.00</strike> <span>$349.00</span></p>
+					<div class="star-rating">
+					<ul class="list-inline">
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+					</ul>
+					</div>
+					<a href="#" class="btn btn-primary">Add to Cart</a>
+					</div>
+					</div>
+					</div>
+					<div class="col-sm-3">
+					<div class="thumb-wrapper">
+					<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
+					<div class="img-box">
+					<img src="/examples/images/products/canon.jpg" class="img-responsive" alt="">
+					</div>
+					<div class="thumb-content">
+					<h4>Canon DSLR</h4>
+					<p class="item-price"><strike>$315.00</strike> <span>$250.00</span></p>
+					<div class="star-rating">
+					<ul class="list-inline">
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+					</ul>
+					</div>
+					<a href="#" class="btn btn-primary">Add to Cart</a>
+					</div>
+					</div>
+					</div>
+					<div class="col-sm-3">
+					<div class="thumb-wrapper">
+					<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
+					<div class="img-box">
+					<img src="/examples/images/products/pixel.jpg" class="img-responsive" alt="">
+					</div>
+					<div class="thumb-content">
+					<h4>Google Pixel</h4>
+					<p class="item-price"><strike>$450.00</strike> <span>$418.00</span></p>
+					<div class="star-rating">
+					<ul class="list-inline">
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star-half-o"></i></li>
+					</ul>
+					</div>
+					<a href="#" class="btn btn-primary">Add to Cart</a>
+					</div>
+					</div>
+					</div>
+					<div class="col-sm-3">
+					<div class="thumb-wrapper">
+					<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
+					<div class="img-box">
+					<img src="/examples/images/products/watch.jpg" class="img-responsive" alt="">
+					</div>
+					<div class="thumb-content">
+					<h4>Apple Watch</h4>
+					<p class="item-price"><strike>$350.00</strike> <span>$330.00</span></p>
+					<div class="star-rating">
+					<ul class="list-inline">
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star"></i></li>
+					<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+					</ul>
+					</div>
+					<a href="#" class="btn btn-primary">Add to Cart</a>
+					</div>
+					</div>
+					</div>
+					</div>
 					</div>*@
 				</div>
 				<!-- Carousel controls -->
