@@ -121,9 +121,16 @@
                             <p class="summary__desc">@Model.Count() товара</p>
                                         <p class="summary__price">@totalPrice $</p>
                         </div>
-                        <button type="button" class="button__cart">
-                            Перейти к оформлению
-                        </button>
+                                <form method="post" action="/Payments/checkout">
+    <input style="visibility: hidden" value="@totalPrice" type="text" name="data" />
+    
+    @*<input type="submit" value="Submit" />*@
+
+
+                                <button type="submit" class="button__cart">
+                                        Перейти к оформлению
+                                </button>
+</form>
                     </div>
                 </div>
             </section>

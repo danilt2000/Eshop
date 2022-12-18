@@ -136,26 +136,7 @@ namespace Eshop.Controllers
 				return Json("");
 			}
 			string connectionString = "Server=(localdb)\\mssqllocaldb;Database=Eshop3.Data;Trusted_Connection=True;MultipleActiveResultSets=true";
-			//BasketProduct basketProduct = new BasketProduct { BasketId = Int16.Parse(backetId), ProductId = Int16.Parse(productId) };
-
-			//_context.Set<BasketProduct>().Add(basketProduct);
-
-			//await _context.SaveChangesAsync();
-
-
-			//         Product product = new Product { Id = Int16.Parse(productId) };
-			//         _context.Products.Add(product);
-			//         _context.Products.Attach(product);
-
-			//         Basket basket = new Basket { Id = Int16.Parse(backetId) };
-
-			//_context.Baskets.Add(basket);
-			//_context.Baskets.Attach(basket);
-
-			//product.Baskets = new List<BasketProduct>();
-			//product.Baskets.Add(basket);
-			//_context.BasketProduct.($"INSERT INTO BasketProduct (BasketId, ProductId) VALUES({Int16.Parse(backetId)}, {Int16.Parse(productId)} ); ");
-
+			
 
 			using (SqlConnection con = new SqlConnection(connectionString))
 			{

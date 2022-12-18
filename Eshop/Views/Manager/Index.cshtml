@@ -1,0 +1,113 @@
+﻿@using Eshop.Data
+@using Microsoft.AspNetCore.Identity
+@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+	Layout = "_Main";
+
+}
+
+
+
+<h1>Manager:@User.Identity?.Name</h1>
+@*@model Eshop.Models.Product*@
+@model IEnumerable<Eshop.Models.Product>
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject EshopContext _context;
+@{
+	ViewData["Title"] = "Manager";
+}
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Products
+				@*@Html.DisplayNameFor(model => model.Name)*@
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Description)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Price)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Type)
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Description)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Price)
+				</td>
+				<td>
+					@item.Type
+				</td>
+				<td>
+					<a asp-area="" asp-action="EditProduct" asp-controller="Manager" asp-route-id="@item.Id">Edit</a> |
+					<a asp-action="DeleteProduct" asp-controller="Manager"  asp-route-id="@item.Id">Delete</a> 
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+					<a asp-action="CreateProduct" asp-controller="Manager" >Create Product</a>
+
+
+
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Busket Id
+			</th>
+			<th>
+				Busket Name
+			</th>
+			<th>
+				Owner  UserID
+			</th>
+
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in _context.Baskets.ToList())
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Id)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.UserID)
+				</td>
+
+				<td>
+					
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+
+
+@section Scripts {
+    @{
+	await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

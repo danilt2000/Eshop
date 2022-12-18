@@ -1,18 +1,14 @@
 ﻿using Eshop.Data;
 using Eshop.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 
-namespace Eshop.Areas.Admin.Controllers
+namespace Eshop.Controllers
 {
-
-	public class AdminController : Controller
+	public class ManagerController : Controller
 	{
 		private readonly UserManager<IdentityUser> userManager;
 		private readonly SignInManager<IdentityUser> signInManager;
@@ -20,7 +16,7 @@ namespace Eshop.Areas.Admin.Controllers
 		private readonly IWebHostEnvironment _hostEnvironment;
 		//RoleManager<IdentityRole> roleManager;
 
-		public AdminController(UserManager<IdentityUser> userManager,
+		public ManagerController(UserManager<IdentityUser> userManager,
 	    SignInManager<IdentityUser> signInManager,
 	    //RoleManager<IdentityRole> roleManager,
 	    EshopContext context, IWebHostEnvironment hostEnvironment)
@@ -35,14 +31,13 @@ namespace Eshop.Areas.Admin.Controllers
 		}
 
 		// GET: AdminController
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Manager")]
 		public ViewResult Index()
 		{
-			return View("~/Areas/Admin/Views/Admin/Index.cshtml", _context.Products.ToList());
+			return View(_context.Products.ToList());
 		}
-
+		[Authorize(Roles = "Manager")]
 		// GET: Products/Edit/5
-		[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> EditProduct(int? id)
 		{
 			if (id == null || _context.Products == null)
@@ -55,13 +50,13 @@ namespace Eshop.Areas.Admin.Controllers
 			{
 				return NotFound();
 			}
-			return View("~/Areas/Admin/Views/Admin/EditProduct.cshtml", product);
+			return View(product);
 		}
 
 		// POST: Products/Edit/5
 		// To protect from overposting attacks, enable the specific properties you want to bind to.
 		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Manager")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> EditProduct(int id, [Bind("Id,Name,Description,Price,Type,ImageTitle")] Product product)
@@ -83,71 +78,28 @@ namespace Eshop.Areas.Admin.Controllers
 				if (!ProductExists(product.Id))
 				{
 					//return NotFound();
-					return View("~/Areas/Admin/Views/Admin/EditProduct.cshtml", product);
+					return View(product);
 
 				}
 				else
 				{
 					//throw;
-					return View("~/Areas/Admin/Views/Admin/EditProduct.cshtml", product);
+					return View( product);
 				}
 			}
 			return RedirectToAction(nameof(Index));
 			//}
 
 		}  // GET: Products/Edit/5
-		[Authorize(Roles = "Admin")]
-		public async Task<IActionResult> EditUser(string? id)
-		{
-			if (id == null || _context.Users == null)
-			{
-				return NotFound();
-			}
-
-			var user = await _context.Users.FindAsync(id);
-			if (user == null)
-			{
-				return NotFound();
-			}
-			return View("~/Areas/Admin/Views/Admin/EditUser.cshtml", user);
-		}
-
-		// POST: Products/Edit/5
-		// To protect from overposting attacks, enable the specific properties you want to bind to.
-		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[Authorize(Roles = "Admin")]
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> EditUser(string id, [Bind("UserName,Email,PhoneNumber")] IdentityUser user)
-		{
-			string connectionString = "Server=(localdb)\\mssqllocaldb;Database=Eshop3.Data;Trusted_Connection=True;MultipleActiveResultSets=true";
-			using (SqlConnection con = new SqlConnection(connectionString))
-			{
-				using (SqlCommand cmd = new SqlCommand())
-				{
-					cmd.Connection = con;
-
-					cmd.CommandText = $"UPDATE AspNetUsers SET UserName = '{user.UserName}' , Email = '{user.Email}' , PhoneNumber='{user.PhoneNumber}'  WHERE  Id = '{id}' ";
-
-					con.Open();
-
-					cmd.ExecuteNonQuery();
-
-					con.Close();
-				}
-			}
-
-			return RedirectToAction(nameof(Index));
-
-		}
-		[Authorize(Roles = "Admin")]
+		
+		[Authorize(Roles = "Manager")]
 		public IActionResult CreateProduct()
 		{
-			return View("~/Areas/Admin/Views/Admin/CreateProduct.cshtml");
+			return View();
 		}
 
-		// POST: Client/Create
-		[Authorize(Roles = "Admin")]
+		
+		[Authorize(Roles = "Manager")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> CreateProduct([Bind("Id,Name,Description,Price,Type,ImageFile,ImageTitle")] Product product)
@@ -174,10 +126,10 @@ namespace Eshop.Areas.Admin.Controllers
 
 
 
-			return View("~/Areas/Admin/Views/Admin/CreateProduct.cshtml", product);
+			return View( product);
 		}
 		// GET: Products/Delete/5
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Manager")]
 		public async Task<IActionResult> DeleteProduct(int? id)
 		{
 			if (id == null || _context.Products == null)
@@ -192,12 +144,12 @@ namespace Eshop.Areas.Admin.Controllers
 				return NotFound();
 			}
 
-			return View("~/Areas/Admin/Views/Admin/DeleteProduct.cshtml", product);
+			return View(product);
 
 		}
 
 		// POST: Products/Delete/5
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Manager")]
 		[HttpPost, ActionName("DeleteProductConfirmed")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteProductConfirmed(int id)
