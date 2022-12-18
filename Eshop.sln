@@ -5,7 +5,9 @@ VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshop", "Eshop\Eshop.csproj", "{DB8DDC08-3C0E-49E5-9D5D-9D2214969697}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EshopTestsEntitys", "EshopTestsEntitys\EshopTestsEntitys.csproj", "{1F82537C-4545-4AB6-B5F2-20555D0F4B8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EshopTestsEntitys", "EshopTestsEntitys\EshopTestsEntitys.csproj", "{1F82537C-4545-4AB6-B5F2-20555D0F4B8B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StripeExample", "..\..\..\..\..\Management\stripe-sample-code\StripeExample.csproj", "{014DB43F-4663-48D0-B59C-7B0B56D1E70C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{1F82537C-4545-4AB6-B5F2-20555D0F4B8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F82537C-4545-4AB6-B5F2-20555D0F4B8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F82537C-4545-4AB6-B5F2-20555D0F4B8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{014DB43F-4663-48D0-B59C-7B0B56D1E70C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{014DB43F-4663-48D0-B59C-7B0B56D1E70C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{014DB43F-4663-48D0-B59C-7B0B56D1E70C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{014DB43F-4663-48D0-B59C-7B0B56D1E70C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

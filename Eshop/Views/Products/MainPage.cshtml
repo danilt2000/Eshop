@@ -9,90 +9,105 @@
 	Layout = "MainPageLayout";
 	int itemPosition = 0;
 	string pathImage = "";
-	string userName = User.Identity?.Name;
-
-	string userid = _context.Users.Single(a => a.UserName == userName).Id;
-
-	int backetId = _context.Baskets.Single(a => a.UserID == userid).Id;
-
+	string backgroundColor = "";
 	var basketProducts = _context.BasketProduct
-					.Where(a => a.BasketId == backetId).Select(x => x.Product);
-					
-}
-<div class="container my-4  text-white">
-	<div class="row">
-		<div class="col-6 p-3"> <img src="~/assets/images/MainBoard.jpg" alt="MainBoard"></div>
+						.Where(a => a.BasketId == 9999412).Select(x => x.Product);
+	if (SignInManager.IsSignedIn(User))
+	{
+
+
+
+		string userName = User.Identity?.Name;
+
+		string userid = _context.Users.Single(a => a.UserName == userName).Id;
+		int backetId = _context.Baskets.Single(a => a.UserID == userid).Id;
+
+		 basketProducts = _context.BasketProduct
+						.Where(a => a.BasketId == backetId).Select(x => x.Product);
+
+	}
+}	
+	<div class="container my-4  text-white">
+		<div class="row">
+			<div class="col-6 p-3"> <img src="~/assets/images/MainBoard.jpg" alt="MainBoard"></div>
+		</div>
 	</div>
-</div>
-<div class="container ">
-	<div class="row">
-		<div class="col-md-12">
+	<div class="container ">
+		<div class="row">
+			<div class="col-md-12">
 
-			<h2>Featured <b>Products</b></h2>
-			<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
-				<!-- Carousel indicators -->
-				<ol class="carousel-indicators">
-					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-					<li data-target="#myCarousel" data-slide-to="1"></li>
-					<li data-target="#myCarousel" data-slide-to="2"></li>
-				</ol>
-				<!-- Wrapper for carousel items -->
-				<div class="carousel-inner">
-					<div class="item active">
-						<div class="row">
+				<h2>Featured <b>Products</b></h2>
+				<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
+					<!-- Carousel indicators -->
+					<ol class="carousel-indicators">
+						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+						<li data-target="#myCarousel" data-slide-to="1"></li>
+						<li data-target="#myCarousel" data-slide-to="2"></li>
+					</ol>
+					<!-- Wrapper for carousel items -->
+					<div class="carousel-inner">
+						<div class="item active">
+							<div class="row">
 
-							@{
+								@{
 								foreach (var item in Model)
 								{
-
-
-									int idProduct = item.Id;
-									string backgroundColor="";
-									itemPosition++;
-									if (basketProducts.Any(x=>x.Id==idProduct))
+									if (SignInManager.IsSignedIn(User))
 									{
-										 backgroundColor = "greenyellow";
+										int idProduct = item.Id;
+										 backgroundColor = "";
+										
+											
+										if (basketProducts.Any(x => x.Id == idProduct))
+										{
+											backgroundColor = "greenyellow";
+										}
+
 									}
-									<div  class="col-sm-3">
-										<div class="thumb-wrapper">
-											<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
-											<div class="img-box">
-												<img src="~/assets/images/@item.ImageTitle" class="img-responsive" asp-append-version="true" alt="">
-											</div>
-											<div class="thumb-content">
-												<h4>@item.Name</h4>
-												<div class="star-rating">
-													<ul class="list-inline">
-														<li class="list-inline-item"><i class="fa fa-star"></i></li>
-														<li class="list-inline-item"><i class="fa fa-star"></i></li>
-														<li class="list-inline-item"><i class="fa fa-star"></i></li>
-														<li class="list-inline-item"><i class="fa fa-star"></i></li>
-														<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-													</ul>
+
+									
+									itemPosition++;
+									
+												<div  class="col-sm-3">
+													<div class="thumb-wrapper">
+														<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
+														<div class="img-box">
+															<img src="~/assets/images/@item.ImageTitle" class="img-responsive" asp-append-version="true" alt="">
+														</div>
+														<div class="thumb-content">
+															<h4>@item.Name</h4>
+															<div class="star-rating">
+																<ul class="list-inline">
+																	<li class="list-inline-item"><i class="fa fa-star"></i></li>
+																	<li class="list-inline-item"><i class="fa fa-star"></i></li>
+																	<li class="list-inline-item"><i class="fa fa-star"></i></li>
+																	<li class="list-inline-item"><i class="fa fa-star"></i></li>
+																	<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+																</ul>
+															</div>
+															<p class="item-price"><b>$@item.Price</b></p>
+															<a  style="background-color:@backgroundColor" href="/Products/About/@item.Id" class="btn btn-primary">Add to Cart</a>
+														</div>
+													</div>
 												</div>
-												<p class="item-price"><b>$@item.Price</b></p>
-												<a  style="background-color:@backgroundColor" href="/Products/About/@item.Id" class="btn btn-primary">Add to Cart</a>
-											</div>
-										</div>
-									</div>
 									if (itemPosition == 4)
 									{
 										break;
 									}
 								}
-							}
+								}
+							</div>
 						</div>
-					</div>
 
-					<div class="item">
-						<div class="row">
-							@{
+						<div class="item">
+							<div class="row">
+								@{
 								itemPosition = 0;
 								foreach (var item in Model)
 								{
 									itemPosition++;
 									int idProduct = item.Id;
-									string backgroundColor = "";
+									 backgroundColor = "";
 									if (basketProducts.Any(x => x.Id == idProduct))
 									{
 										backgroundColor = "greenyellow";
@@ -100,32 +115,32 @@
 
 									if (itemPosition > 4)
 									{
-										<div class="col-sm-3">
-											<div class="thumb-wrapper">
-												<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
-												<div class="img-box">
-													<img src="~/assets/images/@item.ImageTitle" class="img-responsive" asp-append-version="true" alt="">
-												</div>
-												<div class="thumb-content">
-													<h4>@item.Name</h4>
-													<div class="star-rating">
-														<ul class="list-inline">
-															<li class="list-inline-item"><i class="fa fa-star"></i></li>
-															<li class="list-inline-item"><i class="fa fa-star"></i></li>
-															<li class="list-inline-item"><i class="fa fa-star"></i></li>
-															<li class="list-inline-item"><i class="fa fa-star"></i></li>
-															<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-														</ul>
+													<div class="col-sm-3">
+														<div class="thumb-wrapper">
+															<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
+															<div class="img-box">
+																<img src="~/assets/images/@item.ImageTitle" class="img-responsive" asp-append-version="true" alt="">
+															</div>
+															<div class="thumb-content">
+																<h4>@item.Name</h4>
+																<div class="star-rating">
+																	<ul class="list-inline">
+																		<li class="list-inline-item"><i class="fa fa-star"></i></li>
+																		<li class="list-inline-item"><i class="fa fa-star"></i></li>
+																		<li class="list-inline-item"><i class="fa fa-star"></i></li>
+																		<li class="list-inline-item"><i class="fa fa-star"></i></li>
+																		<li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+																	</ul>
+																</div>
+																<p class="item-price"><b>$@item.Price</b></p>
+																<a style="background-color:@backgroundColor" href="/Products/About/@item.Id" class="btn btn-primary">Add to Cart</a>
+															</div>
+														</div>
 													</div>
-													<p class="item-price"><b>$@item.Price</b></p>
-													<a style="background-color:@backgroundColor" href="/Products/About/@item.Id" class="btn btn-primary">Add to Cart</a>
-												</div>
-											</div>
-										</div>
 									}
 								}
-							}
-							@*
+								}
+								@*
 							<div class="col-sm-3">
 							<div class="thumb-wrapper">
 							<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
@@ -214,9 +229,9 @@
 							</div>
 							</div>
 							</div>*@
+							</div>
 						</div>
-					</div>
-					@*<div class="item">
+						@*<div class="item">
 					<div class="row">
 					<div class="col-sm-3">
 					<div class="thumb-wrapper">
@@ -308,15 +323,16 @@
 					</div>
 					</div>
 					</div>*@
+					</div>
+					<!-- Carousel controls -->
+					<a class="carousel-control left" href="#myCarousel" data-slide="prev">
+						<i class="fa fa-angle-left"></i>
+					</a>
+					<a class="carousel-control right" href="#myCarousel" data-slide="next">
+						<i class="fa fa-angle-right"></i>
+					</a>
 				</div>
-				<!-- Carousel controls -->
-				<a class="carousel-control left" href="#myCarousel" data-slide="prev">
-					<i class="fa fa-angle-left"></i>
-				</a>
-				<a class="carousel-control right" href="#myCarousel" data-slide="next">
-					<i class="fa fa-angle-right"></i>
-				</a>
 			</div>
 		</div>
+		
 	</div>
-</div>
