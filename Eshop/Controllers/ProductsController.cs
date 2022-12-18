@@ -22,14 +22,14 @@ namespace Eshop.Controllers
 		public ProductsController(UserManager<IdentityUser> userManager,
 		    SignInManager<IdentityUser> signInManager,
 		    //RoleManager<IdentityRole> roleManager,
-		    EshopContext context)
+		    EshopContext context
+		  )
 		{
 
 			this.userManager = userManager;
 			this.signInManager = signInManager;
 			//this.roleManager=roleManager; //добавление роли 
 			this._context = context;
-
 		}
 
 		// GET: Products
@@ -60,9 +60,15 @@ namespace Eshop.Controllers
 
 			return View(await _context.Products.ToListAsync());
 		}
-		public IActionResult About()
+		public async Task<IActionResult> AboutAsync(int? id)
 		{
-			return View();
+			if (id == null || _context.Products == null)
+			{
+				return NotFound();
+			}
+
+			var product = await _context.Products.FindAsync(id);
+			return View(product);
 		}
 		public async Task<IActionResult> MainPage()
 		{

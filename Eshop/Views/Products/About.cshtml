@@ -1,8 +1,21 @@
-﻿@{
+﻿@using Eshop.Data
+@using Microsoft.AspNetCore.Identity
+@model Eshop.Models.Product
+@inject SignInManager<IdentityUser> SignInManager
+@inject EshopContext _context;
+@{
         ViewData["Title"] = "About";
         Layout = "EshopLayout";
+        string userid = "";
 }
+@if (SignInManager.IsSignedIn(User))
+			{
+				string userName = User.Identity?.Name;
 
+				var id = _context.Users.Where(a => a.UserName == userName).ToList();
+				userid = id[0].Id;
+				var backetId = _context.Baskets.Single(a => a.UserID == userid).Id;
+                        }
 <header>
         <div class="header">
                 <div class="header-top"></div>
@@ -21,29 +34,28 @@
 </header>
 <hr />
 <main>
+
         <section class="card">
                 <div class="container">
                         <h1 class="card__title">
-                                6.5" Смартфон Samsung Galaxy A53 5G 256 ГБ белый
+                               @Model.Name
                         </h1>
                         <div class="card-content">
-                                <img src="~/assets/images/Telephone.jpg"
+                                <img src="~/assets/images/@Model.ImageTitle"
                                      alt="phone"
                                      class="card__img" />
                                 <p class="card__desc">
-                                        8x(2.4 ГГц, 2 ГГц), 8 Гб, 2 SIM, Super AMOLED,
-                                        2400x1080, камера 64+12+5+5 Мп, NFC, 5G, GPS, 5000
-                                        мА*ч
-                                        <a href="#" class="card__desk_link">подробнее</a>
+                                      @Model.Description
+                                       
                                 </p>
                                 <div class="card__price">
-                                        <p class="price">33 999 ₽</p>
+                                        <p class="price">@Model.Price $</p>
                                 </div>
-                                <button type="button" class="button__buy">
+                                <button type="button" style="height: 100%;" class="button__buy">
                                         Купить
                                 </button>
                                 <p class="card__type">
-                                        <span class="type">Тип продукта:</span> телефоны
+                                        <span class="type">Тип продукта:</span> @Model.Type
                                 </p>
                         </div>
                 </div>

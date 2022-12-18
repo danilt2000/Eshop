@@ -15,6 +15,8 @@ namespace Eshop.Models
 
 		public List<BasketProduct> Baskets { get; set; } = new();
 
+		public string ImageTitle { get; set; } = string.Empty;
+
 		[NotMapped]
 		[DisplayName("Upload File")]
 		public IFormFile ImageFile { get; set; }

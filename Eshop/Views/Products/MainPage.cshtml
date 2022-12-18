@@ -4,6 +4,7 @@
 @{
 	Layout = "MainPageLayout";
 	int itemPosition = 0;
+	string pathImage = "";
 }
 <div class="container my-4  text-white">
 	<div class="row">
@@ -28,7 +29,6 @@
 						<div class="row">
 
 							@{
-
 								foreach (var item in Model)
 								{
 									itemPosition++;
@@ -36,7 +36,7 @@
 										<div class="thumb-wrapper">
 											<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
 											<div class="img-box">
-												<img src="~/assets/images/Telephone.jpg" class="img-responsive" alt="">
+												<img src="~/assets/images/@item.ImageTitle" class="img-responsive"   asp-append-version="true" alt="">
 											</div>
 											<div class="thumb-content">
 												<h4>@item.Name</h4>
@@ -50,7 +50,7 @@
 													</ul>
 												</div>
 												<p class="item-price"><b>$@item.Price</b></p>
-												<a href="#" class="btn btn-primary">Add to Cart</a>
+												<a href="/Products/About/@item.Id" class="btn btn-primary">Add to Cart</a>
 											</div>
 										</div>
 									</div>
@@ -59,10 +59,7 @@
 										break;
 									}
 								}
-
 							}
-
-
 						</div>
 					</div>
 
@@ -70,7 +67,6 @@
 						<div class="row">
 							@{
 								itemPosition = 0;
-
 								foreach (var item in Model)
 								{
 									itemPosition++;
@@ -80,7 +76,7 @@
 											<div class="thumb-wrapper">
 												<span class="wish-icon"><i class="fa fa-heart-o"></i></span>
 												<div class="img-box">
-													<img src="~/assets/images/Telephone.jpg" class="img-responsive" alt="">
+													<img src="~/assets/images/@item.ImageTitle" class="img-responsive" asp-append-version="true" alt="">
 												</div>
 												<div class="thumb-content">
 													<h4>@item.Name</h4>
@@ -100,13 +96,8 @@
 										</div>
 									}
 								}
-
-
 							}
 							@*
-
-
-
 							<div class="col-sm-3">
 							<div class="thumb-wrapper">
 							<span class="wish-icon"><i class="fa fa-heart-o"></i></span>

@@ -236,12 +236,24 @@
 			</a>
 			@*   <div class="header-info__logo"></div>*@
 			<nav class="my-2 my-md-0 mr-md-3">
+				
 				@*<a class="p-2 text-dark" href="#">Features</a>
 				<a class="p-2 text-dark" href="#">Enterprise</a>
 				<a class="p-2 text-dark" href="#">Support</a>*@
 				@if (SignInManager.IsSignedIn(User))
 				{
-					<a class="p-2 text-dark" href="#"> @User.Identity?.Name</a>
+					if (User.IsInRole("Admin"))
+					{
+						<a style="text-decoration: none;" class="p-2 rounded-top bg-danger text-white"
+						href="/Admin/Index">Admin Panel</a>
+					}
+					if (User.IsInRole("Manager"))
+					{
+						<a style="text-decoration: none;" class="p-2 rounded-top bg-warning text-white"
+						href="/Admin/Index">Manager Panel</a>
+					}
+
+					<a class="p-2 text-dark" href="/Products"> @User.Identity?.Name</a>
 				}
 				<a class="p-2 text-secondary font-family: inherit" href="#">Корзина</a>
 			</nav>
